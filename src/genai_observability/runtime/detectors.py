@@ -1,6 +1,7 @@
 from genai_observability.patterns.library import PatternLibrary, load_pattern_library
 from genai_observability.patterns.scan import PAYLOAD_FIELD_STAGES, scan_payload
 from genai_observability.schemas.canonical import CanonicalEventStream
+from genai_observability.schemas.enums import DetectorPass
 from genai_observability.schemas.span import AuthzAttributes, CanonicalSpan, ContentAttributes, DetectorEvent
 
 _CONTENT_FIELDS = (
@@ -58,11 +59,12 @@ def apply_runtime_detectors(
 ) -> CanonicalEventStream:
     """Return a copy with detector events recomputed from payload fields.
 
-    Replaces fixture-supplied detector_events. Does not mutate `stream`.
+    Replaces fixture-supplied detector_events. Sets detector_pass to completed.
+    Does not mutate `stream`. Does not write forensic answers.
     """
     library = library or load_pattern_library()
     spans = [
         span.model_copy(update={"detector_events": _span_detector_events(span, library)})
         for span in stream.spans
     ]
-    return stream.model_copy(update={"spans": spans})
+    return stream.model_copy(update={"spans": spans, "detector_pass": DetectorPass.COMPLETED})

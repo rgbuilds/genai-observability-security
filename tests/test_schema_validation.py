@@ -26,6 +26,7 @@ def test_valid_canonical_stream_parses(sample_stream: CanonicalEventStream) -> N
     assert sample_stream.scenario_id == "scenario-0001"
     assert len(sample_stream.spans) == 4
     assert sample_stream.spans[0].security is not None
+    assert sample_stream.spans[2].detector_events is not None
     assert sample_stream.spans[2].detector_events[0].category.value == "sensitive_data"
 
 
@@ -52,7 +53,7 @@ def test_valid_export_envelope_parses(sample_stream: CanonicalEventStream) -> No
     assert export.schema_version == "telemetry_export.v1"
     assert export.spans[0].content is None
     assert export.spans[0].security is None
-    assert export.spans[0].detector_events == []
+    assert export.spans[0].detector_events is None
 
 
 def test_missing_required_field_is_rejected() -> None:

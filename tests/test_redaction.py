@@ -1,4 +1,5 @@
 from genai_observability.patterns import load_pattern_library, redact_payload
+from genai_observability.runtime import apply_runtime_detectors
 from genai_observability.schemas.enums import PolicyId
 from genai_observability.serialization import canonical_hash, canonical_json_text
 from genai_observability.transforms import apply_policy
@@ -86,7 +87,7 @@ def test_p2_redacts_payload_fields_only() -> None:
             retrieval={"source_id": CANARY},
         )
     )
-    export = apply_policy(stream, PolicyId.P2)
+    export = apply_policy(apply_runtime_detectors(stream), PolicyId.P2)
     text = canonical_json_text(export)
     span = export.spans[0]
     assert span.content is not None
@@ -113,6 +114,6 @@ def test_p2_zero_exposure_when_canaries_stay_in_payload_scope() -> None:
             authz={"resource": f"res-{SECRET_CANARY}"},
         )
     )
-    text = canonical_json_text(apply_policy(stream, PolicyId.P2))
+    text = canonical_json_text(apply_policy(apply_runtime_detectors(stream), PolicyId.P2))
     assert CANARY not in text
     assert SECRET_CANARY not in text

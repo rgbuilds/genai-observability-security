@@ -94,9 +94,15 @@ Hashes and opaque identifiers support correlation; they are not by themselves pr
 
 A sensitive-data event is a frozen runtime detector firing on a concrete payload location. Pilot v1 detector classes are canary-grammar matches and secret-like key names from pattern library v1. Detectors must not consult the canary inventory, answer key, fixture identifier, or family label.
 
-Runtime payload detectors run once on the full canonical stream before any policy transform. They replace any fixture-supplied `detector_events`. Policy transforms must not rerun detectors. All policies receive that same enriched stream.
+Runtime payload detectors run once on the full canonical stream before any policy transform. They replace any fixture-supplied `detector_events` and set stream-level `detector_pass=completed`. `detector_pass` is runtime processing state, not a forensic answer, and is not exported. Policy transforms must not rerun detectors and must reject streams whose detector pass has not completed, so an unprocessed stream cannot export `detector_events: []` as a completed negative. All policies then receive that same enriched stream.
 
-Detector events retain `detector_id`, category, stage, and `match_class`. They omit the raw matched value. Evidence location is `stage` (and the hosting span), not a JSON path. Locations and event fields must not contain raw canary strings or sensitive dictionary keys. P1, P2, and P3 retain these events; P0 drops them. Report the limitation that detectors cover only predeclared pattern classes.
+Exported detector evidence uses this representation:
+
+- omitted `detector_events` key: detector evidence is unavailable (P0 drop).
+- `detector_events: []`: the runtime detector pass completed with no matches on that span.
+- a populated list: observed detector events.
+
+Detector events retain `detector_id`, category, stage, and `match_class`. They omit the raw matched value. Evidence location is `stage` (and the hosting span), not a JSON path. Locations and event fields must not contain raw canary strings or sensitive dictionary keys. P1, P2, and P3 retain these events; P0 omits the key. Report the limitation that detectors cover only predeclared pattern classes.
 
 Approved detector categories are `sensitive_data` and `untrusted_propagation`. v1 emits only `sensitive_data` with `match_class` `canary_grammar` or `secret_key`. Stage values are `user_input`, `instructions`, `retrieval`, `tool_args`, `tool_result`, `model_output`, and `authorization`. Matches in `authz.*` use stage `authorization` (C7).
 
@@ -240,6 +246,7 @@ The eventual evidence pack should include setup, counts, policy definitions, met
 - **Forensic evidence rules:** Extractor then evaluator, with credit requiring an extracted answer plus evidence location. Predicates and category mapping are in section 5. Q14 is parent/child topology only and is not proof of content influence. Q15 derives `benign` / `security_relevant` from the frozen operational rule in section 5; the expected label is never exported and is never obtained from fixture identifiers.
 - **Pilot execution format:** Deterministic JSON fixtures and policy transforms; no live model calls and no OTLP collector in the pilot. The artifact of record is a versioned local JSON export. Hash with SHA-256 over canonical JSON. Interfaces must allow captured traces to be added later as another canonical-event source.
 - **Pattern library v1 and detector pipeline (before transforms):** Library v1 grammar, secret-key rule, replacements, payload-only traversal, and secret-key-then-substring precedence are frozen in section 3. All eligible pilot canaries stay in that grammar and in `content.*` / `authz.*`; expected P2 zero exposure is valid. Payload detectors run once before transforms, replace fixture-supplied events, and do not emit raw matches or sensitive keys. Stage `authorization` covers `authz.*` / C7. `untrusted_propagation` remains reserved and is not implemented in v1. Transforms do not rerun detectors.
+- **Detector-drop representation:** Omitted `detector_events` means evidence is unavailable. `[]` means the runtime pass completed with no matches. A populated list contains observed events. Canonical `detector_pass` records whether that pass ran and is not exported. Transforms reject unprocessed streams.
 
 ### Still unresolved — not required to implement transforms
 
@@ -248,4 +255,4 @@ The eventual evidence pack should include setup, counts, policy definitions, met
 - **Aggregation and uncertainty (before full-study freeze):** Resolve treatment of control variants, missing/invalid runs, family weighting, bootstrap grouping and parameters, and remaining zero-denominator cases beyond the exposure-rate rule above. Proposed primary aggregation: equal weight per registered scenario, with grouped variants handled explicitly and denominators reported.
 - **Artifact retention and publication (before full-study freeze):** Decide which synthetic traces and reference manifests may be committed or released, local retention rules, and the eventual public reproducibility package. Repository visibility remains private during design and pilot.
 
-Review record: scaffolding-blocking decisions approved 2026-10-04 with the Q14/Q15 constraints above. Pattern library v1 and the pre-transform detector pipeline approved 2026-10-04; propagation detector deferred. Overall contract approval, remaining decisions, pilot authorization, and full-study authorization have not been recorded.
+Review record: scaffolding-blocking decisions approved 2026-10-04 with the Q14/Q15 constraints above. Pattern library v1 and the pre-transform detector pipeline approved 2026-10-04; propagation detector deferred. Detector-drop representation (omit vs `[]` vs populated list; reject unprocessed streams) adopted 2026-10-04. Overall contract approval, remaining decisions, pilot authorization, and full-study authorization have not been recorded.

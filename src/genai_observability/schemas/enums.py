@@ -13,6 +13,13 @@ class SourceKind(StrEnum):
     CAPTURED = "captured"
 
 
+class DetectorPass(StrEnum):
+    """Runtime processing state on the canonical stream. Not a forensic answer."""
+
+    NOT_RUN = "not_run"
+    COMPLETED = "completed"
+
+
 class SpanKind(StrEnum):
     REQUEST = "request"
     MODEL = "model"

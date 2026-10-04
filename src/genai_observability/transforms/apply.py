@@ -5,15 +5,20 @@ from genai_observability.patterns.library import PatternLibrary, load_pattern_li
 from genai_observability.patterns.scan import redact_payload
 from genai_observability.schemas.allowlist import PolicyAllowlist, RetentionAction, load_allowlist
 from genai_observability.schemas.canonical import CanonicalEventStream
-from genai_observability.schemas.enums import PolicyId
+from genai_observability.schemas.enums import DetectorPass, PolicyId
 from genai_observability.schemas.export import TelemetryExport
 from genai_observability.schemas.span import (
     AuthzAttributes,
     CanonicalSpan,
     ContentAttributes,
+    DetectorEvent,
     RetrievalAttributes,
     SecurityAttributes,
 )
+
+
+class UnprocessedStreamError(ValueError):
+    """Transform refused a stream whose runtime detector pass has not completed."""
 
 
 def opaque_identifier(value: str) -> str:
@@ -133,6 +138,14 @@ def _transform_span(
     library: PatternLibrary,
 ) -> CanonicalSpan:
     keep_detectors = allowlist.fields["detector_events"] is not RetentionAction.DROP
+    if keep_detectors:
+        if span.detector_events is None:
+            raise UnprocessedStreamError(
+                "completed detector pass must set detector_events to a list on every span"
+            )
+        detector_events: list[DetectorEvent] | None = list(span.detector_events)
+    else:
+        detector_events = None
     return CanonicalSpan(
         span_id=span.span_id,
         parent_span_id=span.parent_span_id,
@@ -150,7 +163,7 @@ def _transform_span(
         authz=_transform_authz(span.authz, allowlist, library),
         retrieval=_transform_retrieval(span.retrieval, allowlist),
         security=_transform_security(span.security, allowlist),
-        detector_events=list(span.detector_events) if keep_detectors else [],
+        detector_events=detector_events,
     )
 
 
@@ -162,6 +175,11 @@ def apply_policy(
     library: PatternLibrary | None = None,
 ) -> TelemetryExport:
     """Pure allowlist transform. Does not run detectors or mutate `stream`."""
+    if stream.detector_pass is not DetectorPass.COMPLETED:
+        raise UnprocessedStreamError(
+            "apply_policy requires a completed runtime detector pass; "
+            "an unprocessed stream must not export a completed-negative detector result"
+        )
     policy = PolicyId(policy_id)
     allowlist = load_allowlist(policy, policy_version)
     library = library or load_pattern_library()

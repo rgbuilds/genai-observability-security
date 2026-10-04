@@ -105,4 +105,4 @@ class CanonicalSpan(_StrictModel):
     authz: AuthzAttributes | None = None
     retrieval: RetrievalAttributes | None = None
     security: SecurityAttributes | None = None
-    detector_events: list[DetectorEvent] = Field(default_factory=list)
+    detector_events: list[DetectorEvent] | None = None

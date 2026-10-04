@@ -21,7 +21,9 @@ def test_runtime_detectors_replace_fixture_events_and_do_not_mutate_source() -> 
         )
     )
     enriched = apply_runtime_detectors(stream)
+    assert stream.spans[0].detector_events is not None
     assert stream.spans[0].detector_events[0].match_class == "schema_sample"
+    assert enriched.spans[0].detector_events is not None
     assert [event.match_class for event in enriched.spans[0].detector_events] == ["canary_grammar"]
     assert enriched.spans[0].detector_events[0].stage is DetectorStage.USER_INPUT
     assert enriched.spans[0].detector_events[0].detector_id == "patternlib.v1.canary_grammar"
@@ -33,6 +35,7 @@ def test_authorization_stage_for_authz_payload() -> None:
     )
     enriched = apply_runtime_detectors(stream)
     events = enriched.spans[0].detector_events
+    assert events is not None
     assert len(events) == 1
     assert events[0].stage is DetectorStage.AUTHORIZATION
     assert events[0].match_class == "canary_grammar"
@@ -49,7 +52,9 @@ def test_secret_key_and_canary_hits_are_deduped_by_stage_and_class() -> None:
             }
         )
     )
-    events = apply_runtime_detectors(stream).spans[0].detector_events
+    detected = apply_runtime_detectors(stream).spans[0].detector_events
+    assert detected is not None
+    events = detected
     classes = sorted(event.match_class for event in events)
     assert classes == ["canary_grammar", "secret_key"]
     assert all(event.stage is DetectorStage.TOOL_ARGS for event in events)
@@ -64,6 +69,7 @@ def test_detector_events_omit_raw_canaries_and_sensitive_keys() -> None:
         )
     )
     enriched = apply_runtime_detectors(stream)
+    assert enriched.spans[0].detector_events is not None
     all_events = canonical_json_text(
         {"events": [event.model_dump(mode="json") for event in enriched.spans[0].detector_events]}
     )
@@ -103,7 +109,7 @@ def test_policies_share_enriched_stream_and_transforms_do_not_rerun_detectors() 
     p2 = apply_policy(enriched, PolicyId.P2)
     p3 = apply_policy(enriched, PolicyId.P3)
     expected = enriched.spans[0].detector_events
-    assert p0.spans[0].detector_events == []
+    assert p0.spans[0].detector_events is None
     assert p1.spans[0].detector_events == expected
     assert p2.spans[0].detector_events == expected
     assert p3.spans[0].detector_events == expected
@@ -126,6 +132,6 @@ def test_propagation_detector_is_not_emitted() -> None:
     categories = {
         event.category.value
         for span in enriched.spans
-        for event in span.detector_events
+        for event in span.detector_events or []
     }
     assert categories == {"sensitive_data"}

@@ -1,7 +1,15 @@
 import json
+import math
+
+import pytest
 
 from genai_observability.schemas.canonical import CanonicalEventStream
-from genai_observability.serialization import canonical_json_bytes, canonical_json_text
+from genai_observability.serialization import (
+    NonFiniteNumberError,
+    canonical_hash,
+    canonical_json_bytes,
+    canonical_json_text,
+)
 
 
 def test_canonical_json_is_compact_sorted_utf8(sample_stream: CanonicalEventStream) -> None:
@@ -40,3 +48,33 @@ def test_omitted_optional_groups_are_not_serialized_as_null(
     assert "model" not in request_span
     assert "tool" not in request_span
     assert "retrieval" not in request_span
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"n": float("nan")},
+        {"n": float("inf")},
+        {"n": float("-inf")},
+        {"nested": {"n": float("nan")}},
+        {"items": [1, float("inf")]},
+        {"items": [{"n": float("-inf")}]},
+    ],
+)
+def test_canonical_json_rejects_nonfinite_mapping_values(payload: dict) -> None:
+    with pytest.raises(NonFiniteNumberError, match="non-finite"):
+        canonical_json_bytes(payload)
+    with pytest.raises(NonFiniteNumberError):
+        canonical_json_text(payload)
+
+
+def test_canonical_json_does_not_convert_nonfinite_to_null() -> None:
+    with pytest.raises(NonFiniteNumberError):
+        text = canonical_json_text({"n": math.nan})
+        raise AssertionError(f"emitted {text!r} instead of rejecting NaN")
+
+
+def test_finite_floats_serialize(sample_stream: CanonicalEventStream) -> None:
+    text = canonical_json_text({"ratio": 1.5, "zero": 0.0})
+    assert json.loads(text) == {"ratio": 1.5, "zero": 0.0}
+    assert canonical_hash({"a": 1, "b": 2}) == canonical_hash({"b": 2, "a": 1})

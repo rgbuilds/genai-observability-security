@@ -1,8 +1,8 @@
 from genai_observability.patterns import load_pattern_library, redact_payload
 from genai_observability.schemas.enums import PolicyId
-from genai_observability.serialization import canonical_json_text
+from genai_observability.serialization import canonical_hash, canonical_json_text
 from genai_observability.transforms import apply_policy
-from tests.helpers import CANARY, SECRET_CANARY, minimal_span, stream_from_spans
+from tests.helpers import CANARY, CANARY_B, SECRET_CANARY, minimal_span, stream_from_spans
 
 
 def test_canary_substring_redaction_keeps_surrounding_text() -> None:
@@ -28,12 +28,43 @@ def test_secret_key_replaces_entire_value_and_wins_over_canary() -> None:
     assert redacted["tokenized"] == "keep [REDACTED:canary_grammar]"
 
 
-def test_canary_dictionary_key_is_redacted() -> None:
+def test_canary_dictionary_key_preserves_surrounding_text() -> None:
     library = load_pattern_library()
-    redacted = redact_payload({CANARY: "nested", "ok": "plain"}, library)
+    redacted = redact_payload({f"pre_{CANARY}_post": "nested", "ok": "plain"}, library)
     assert CANARY not in redacted
-    assert redacted["[REDACTED:canary_grammar]"] == "nested"
+    assert f"pre_{CANARY}_post" not in redacted
+    assert redacted["pre_[REDACTED:canary_grammar]_post"] == "nested"
     assert redacted["ok"] == "plain"
+
+
+def test_multiple_canary_keys_do_not_overwrite_each_other() -> None:
+    library = load_pattern_library()
+    redacted = redact_payload({CANARY: "first", CANARY_B: "second"}, library)
+    assert set(redacted) == {"[REDACTED:canary_grammar]", "[REDACTED:canary_grammar]_2"}
+    assert set(redacted.values()) == {"first", "second"}
+    # Lexicographic original keys: CANARY_B (TOOLARG) before CANARY (USERIN).
+    assert redacted["[REDACTED:canary_grammar]"] == "second"
+    assert redacted["[REDACTED:canary_grammar]_2"] == "first"
+
+
+def test_redacted_key_does_not_overwrite_existing_key() -> None:
+    library = load_pattern_library()
+    reserved = "[REDACTED:canary_grammar]"
+    redacted = redact_payload({reserved: "kept", CANARY: "moved"}, library)
+    assert redacted[reserved] == "kept"
+    assert redacted["[REDACTED:canary_grammar]_2"] == "moved"
+    assert len(redacted) == 2
+
+
+def test_key_redaction_is_independent_of_insertion_order() -> None:
+    library = load_pattern_library()
+    left = {CANARY: "a", CANARY_B: "b", "plain": 1, f"pre_{CANARY}": "c"}
+    right = {f"pre_{CANARY}": "c", "plain": 1, CANARY_B: "b", CANARY: "a"}
+    left_redacted = redact_payload(left, library)
+    right_redacted = redact_payload(right, library)
+    assert left_redacted == right_redacted
+    assert list(left_redacted) == list(right_redacted)
+    assert canonical_hash({"payload": left_redacted}) == canonical_hash({"payload": right_redacted})
 
 
 def test_lookalikes_are_not_canaries() -> None:

@@ -1,3 +1,5 @@
+import math
+
 import pytest
 from pydantic import ValidationError
 
@@ -95,3 +97,26 @@ def test_forbidden_label_inside_tool_args_is_rejected() -> None:
     payload["content"] = {"tool_args": {"incident_type": "prompt_injection"}}
     with pytest.raises(ValidationError):
         CanonicalSpan.model_validate(payload)
+
+
+@pytest.mark.parametrize(
+    "tool_args",
+    [
+        {"n": float("nan")},
+        {"n": float("inf")},
+        {"n": float("-inf")},
+        {"nested": {"n": math.nan}},
+        {"items": [0, float("inf")]},
+        {"items": [{"n": float("-inf")}]},
+    ],
+)
+def test_nested_nonfinite_payloads_are_rejected_on_models(tool_args: dict) -> None:
+    payload = _span_payload()
+    payload["content"] = {"tool_args": tool_args}
+    with pytest.raises(ValidationError, match="non-finite"):
+        CanonicalSpan.model_validate(payload)
+    with pytest.raises(ValidationError, match="non-finite"):
+        CanonicalSpan(
+            **_span_payload(),
+            content={"tool_args": tool_args},
+        )

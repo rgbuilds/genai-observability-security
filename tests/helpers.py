@@ -2,6 +2,7 @@ from genai_observability.schemas.canonical import CanonicalEventStream
 from genai_observability.schemas.span import CanonicalSpan
 
 CANARY = "SYNTH-USERIN-A1B2C3D4"
+CANARY_B = "SYNTH-TOOLARG-DEADBEEF"
 SECRET_CANARY = "SYNTH-SECRET-DEADBEEF"
 
 

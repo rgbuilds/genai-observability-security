@@ -1,7 +1,8 @@
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from genai_observability.serialization import reject_nonfinite
 from genai_observability.schemas.enums import (
     AuthzDecision,
     DenialReason,
@@ -30,6 +31,12 @@ class _StrictModel(BaseModel):
                 "telemetry must not contain fixture labels or expected conclusions"
             )
         return value
+
+    @model_validator(mode="after")
+    def reject_nonfinite_numbers(self) -> "_StrictModel":
+        # Check the Python dump before any JSON conversion can turn NaN/Inf into null.
+        reject_nonfinite(self.model_dump(mode="python"))
+        return self
 
 
 class ModelAttributes(_StrictModel):

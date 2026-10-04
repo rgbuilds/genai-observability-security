@@ -28,14 +28,41 @@ def redact_string(value: str, library: PatternLibrary) -> str:
     return library.canary_regex().sub(library.canary_grammar.replacement, value)
 
 
-def _redacted_key_name(key: str, library: PatternLibrary, used: dict[str, int]) -> str:
-    if library.canary_regex().search(key) is None:
-        return key
-    base = library.canary_grammar.replacement
-    used[base] = used.get(base, 0) + 1
-    if used[base] == 1:
-        return base
-    return f"{base}_{used[base]}"
+def _next_free_key(candidate: str, taken: set[str]) -> str:
+    if candidate not in taken:
+        return candidate
+    index = 2
+    while f"{candidate}_{index}" in taken:
+        index += 1
+    return f"{candidate}_{index}"
+
+
+def assign_redacted_keys(keys: list[str], library: PatternLibrary) -> dict[str, str]:
+    """Map original keys to unique redacted names.
+
+    Collision rule:
+    1. Keys with no canary substring keep their original names and are reserved first.
+    2. Keys containing canary substrings receive the same in-place substring
+       replacement used for string values, so surrounding key text is preserved.
+    3. Those canary keys are then assigned in lexicographic order of the original
+       key, independent of dictionary insertion order.
+    4. If a candidate name is already reserved by an unredacted key or an earlier
+       assigned redacted key, append ``_N`` for the smallest integer ``N >= 2``
+       that is free. Values are never silently overwritten.
+    """
+    regex = library.canary_regex()
+    assigned: dict[str, str] = {}
+    taken: set[str] = set()
+    for key in keys:
+        if regex.search(key) is None:
+            assigned[key] = key
+            taken.add(key)
+    for key in sorted(key for key in keys if regex.search(key) is not None):
+        candidate = redact_string(key, library)
+        name = _next_free_key(candidate, taken)
+        assigned[key] = name
+        taken.add(name)
+    return assigned
 
 
 def redact_payload(value: Any, library: PatternLibrary) -> Any:
@@ -44,15 +71,16 @@ def redact_payload(value: Any, library: PatternLibrary) -> Any:
     if isinstance(value, list):
         return [redact_payload(item, library) for item in value]
     if isinstance(value, dict):
+        original_keys = [str(key) for key in value]
+        key_map = assign_redacted_keys(original_keys, library)
         redacted: dict[str, Any] = {}
-        used_keys: dict[str, int] = {}
         for key, item in value.items():
-            new_key = _redacted_key_name(str(key), library, used_keys)
+            new_key = key_map[str(key)]
             if library.is_secret_key(str(key)):
                 redacted[new_key] = library.secret_keys.replacement
             else:
                 redacted[new_key] = redact_payload(item, library)
-        return redacted
+        return dict(sorted(redacted.items(), key=lambda item: item[0]))
     return value
 
 

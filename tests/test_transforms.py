@@ -84,6 +84,15 @@ def test_p1_optional_hash_omitted_when_absent() -> None:
     assert span["retrieval"] == {"source_id": "doc-0001"}
 
 
+def test_request_id_stays_on_export_envelope(sample_stream: CanonicalEventStream) -> None:
+    for policy in PolicyId:
+        export = apply_policy(sample_stream, policy)
+        dumped = export.model_dump(mode="json", exclude_none=True)
+        assert dumped["request_id"] == sample_stream.request_id
+        for span in dumped["spans"]:
+            assert "request_id" not in span
+
+
 def test_transform_does_not_rerun_detectors() -> None:
     planted = [
         {

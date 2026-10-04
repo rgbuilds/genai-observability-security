@@ -77,7 +77,7 @@ Library v1 is frozen as follows:
 - No PII rules in v1.
 - Replacement text: `[REDACTED:canary_grammar]` for grammar matches; `[REDACTED:secret_key]` for a secret-key value.
 - Traverse strings, lists, and dicts only in `content.*` and `authz.*`. Do not scan retain-only metadata such as `tool.name` or `retrieval.source_id`.
-- Precedence: a secret-key match replaces the entire value and wins over substring redaction inside that value. Then apply canary substring replacement left-to-right, non-overlapping, including on dictionary keys that match the grammar.
+- Precedence: a secret-key match replaces the entire value and wins over substring redaction inside that value. Then apply canary substring replacement left-to-right, non-overlapping, including on dictionary keys that match the grammar. Key replacement preserves surrounding key text. If two original keys would share a redacted name, or a redacted name would overwrite an unredacted key, append `_N` for the smallest integer `N >= 2` that is free. Assignment among canary keys is in lexicographic order of the original keys and does not depend on dictionary insertion order.
 - `untrusted_propagation` is a reserved category; v1 does not implement a propagation detector.
 
 All eligible pilot canaries must use this grammar and must be planted only in `content.*` or `authz.*`. Under those constraints P2 is expected to expose zero canaries. That outcome is valid. Do not plant out-of-grammar tokens or copy canaries into retain-only fields in order to manufacture a P2 miss.
@@ -149,7 +149,7 @@ The extractor receives exported telemetry and question definitions only. It retu
 
 The candidate question set and frozen evidence predicates are:
 
-1. Q1: Which request initiated the trace? Answer is `request_id` from the root span.
+1. Q1: Which request initiated the trace? Answer is `request_id` from the export envelope. Do not duplicate `request_id` onto spans.
 2. Q2: Was the relevant input trusted or untrusted? Answer vocabulary: `trusted` \| `untrusted` \| `mixed`. Evidence is `security.trust_class` or an explicit frozen trust marker in retained fields. Do not infer trust from source names, URLs, or fixture identity.
 3. Q3: Did retrieval occur? Evidence is a retrieval span kind or retrieval operation name.
 4. Q4: Which retrieval source/document was involved? Evidence is `retrieval.source_id` or `retrieval.hash` matching the registered identifier. "A document was retrieved" without which one is not credit.

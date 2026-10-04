@@ -1,0 +1,259 @@
+{
+  "execution_id": "exec-51",
+  "pair_id": "E",
+  "policy_id": "P3",
+  "request_id": "req-51",
+  "canonical_hash": "b4e9380ca1d99a8f8e7da84173c9ae787e3c3bf2a3dcbc36ee6b02d20b63d7f7",
+  "export_path": "exports/exec-51/P3.json",
+  "export_bytes": 822,
+  "export_hash": "ec19385d6a9e90f44e514d4fc2c5c06d6bac04b023ab1bb32a2a20b83f4ed654",
+  "applicable_denominator": 9,
+  "applicable_correct": 9,
+  "forensic_coverage": 1.0,
+  "q15_extracted": "security_relevant",
+  "q15_expected": "security_relevant",
+  "q15_credit": 1,
+  "exposure": {
+    "applicable": true,
+    "eligible_count": 1,
+    "exposed_count": 0,
+    "rate_label": "0/1",
+    "exposed_ids": [],
+    "leaked_foreign_tokens": [],
+    "predicted": "0/1"
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "req-51",
+      "expected": "req-51",
+      "evidence": [
+        {
+          "pointer": "/request_id",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "untrusted",
+      "expected": "untrusted",
+      "evidence": [
+        {
+          "pointer": "/spans/0/security/trust_class",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "no",
+      "expected": "no",
+      "evidence": [
+        {
+          "pointer": "/spans",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "applicable": false,
+      "credit": null,
+      "predicted": null,
+      "actual": null,
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": null,
+      "evidence": []
+    },
+    {
+      "id": "Q5",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": {
+        "operation": "chat.completion",
+        "provider": "mock",
+        "name": "fixture-model"
+      },
+      "expected": {
+        "provider": "mock",
+        "name": "fixture-model",
+        "operation": "chat.completion"
+      },
+      "evidence": [
+        {
+          "pointer": "/spans/1/name",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/1/model/provider",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/1/model/name",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "no",
+      "expected": "no",
+      "evidence": [
+        {
+          "pointer": "/spans",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q7",
+      "applicable": false,
+      "credit": null,
+      "predicted": null,
+      "actual": null,
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": null,
+      "evidence": []
+    },
+    {
+      "id": "Q8",
+      "applicable": false,
+      "credit": null,
+      "predicted": null,
+      "actual": null,
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": null,
+      "evidence": []
+    },
+    {
+      "id": "Q9",
+      "applicable": false,
+      "credit": null,
+      "predicted": null,
+      "actual": null,
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": null,
+      "evidence": []
+    },
+    {
+      "id": "Q10",
+      "applicable": false,
+      "credit": null,
+      "predicted": null,
+      "actual": null,
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": null,
+      "evidence": []
+    },
+    {
+      "id": "Q11",
+      "applicable": false,
+      "credit": null,
+      "predicted": null,
+      "actual": null,
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": null,
+      "evidence": []
+    },
+    {
+      "id": "Q12",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "yes",
+      "expected": "yes",
+      "evidence": [
+        {
+          "pointer": "/spans/1/detector_events/0/category",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q13",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "model_output",
+      "expected": "model_output",
+      "evidence": [
+        {
+          "pointer": "/spans/1/detector_events/0/stage",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q14",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": [
+        {
+          "parent": "sp-51-req",
+          "child": "sp-51-mdl"
+        }
+      ],
+      "expected": null,
+      "evidence": [
+        {
+          "pointer": "/spans/1/parent_span_id",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q15",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "security_relevant",
+      "expected": "security_relevant",
+      "evidence": [
+        {
+          "pointer": "/spans/1/detector_events/0/category",
+          "resolves_in_artifact": true
+        }
+      ]
+    }
+  ],
+  "discrepancies": []
+}

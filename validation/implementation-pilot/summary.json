@@ -1,0 +1,295 @@
+{
+  "role": "implementation-validation",
+  "research_go_no_go": "not_evaluated",
+  "provenance": {
+    "utc_time": "2026-10-04T23:23:02.796191+00:00",
+    "python": "3.12.13 (main, Jun 23 2026, 15:44:24) [Clang 22.1.3 ]",
+    "platform": {
+      "system": "Darwin",
+      "release": "25.5.0",
+      "machine": "arm64",
+      "mac_ver": "26.5"
+    },
+    "package_version": "0.1.0",
+    "dependencies": {
+      "pydantic": "2.13.5",
+      "pytest": "8.4.2"
+    },
+    "git_commit": "aaa928533e4081eab7dc7c8b266e330c6f5084ee",
+    "git_describe": "aaa9285-dirty",
+    "git_status": "M PILOT_SPEC.md\n M src/genai_observability/paths.py\n M src/genai_observability/sources/fixtures.py\n M tests/helpers.py\n?? fixtures/\n?? references/\n?? src/genai_observability/grading/\n?? src/genai_observability/validation/\n?? tests/test_evaluate.py\n?? tests/test_evidence_pointers.py\n?? tests/test_exposure.py\n?? tests/test_extract.py\n?? tests/test_extract_isolation.py\n?? tests/test_pilot_artifacts.py",
+    "canonical_schema": "canonical_event_stream.v1",
+    "export_schema": "telemetry_export.v1",
+    "policy_version": "1",
+    "pattern_library": "pattern_library.v1",
+    "fixture_root": "fixtures/canonical"
+  },
+  "executions": [
+    "exec-11",
+    "exec-12",
+    "exec-21",
+    "exec-22",
+    "exec-31",
+    "exec-32",
+    "exec-41",
+    "exec-42",
+    "exec-51",
+    "exec-52"
+  ],
+  "policies": [
+    "P0",
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "export_count": 40,
+  "expected_export_count": 40,
+  "failed_runs": [],
+  "applicable_fact_denominators": {
+    "exec-11": 14,
+    "exec-12": 13,
+    "exec-21": 15,
+    "exec-22": 14,
+    "exec-31": 14,
+    "exec-32": 13,
+    "exec-41": 13,
+    "exec-42": 13,
+    "exec-51": 9,
+    "exec-52": 8
+  },
+  "exposure_means_n4": {
+    "P0": {
+      "n": 4,
+      "mean": 0.0,
+      "excluded_zero_canary": [
+        "exec-12",
+        "exec-22",
+        "exec-32",
+        "exec-41",
+        "exec-42",
+        "exec-52"
+      ]
+    },
+    "P1": {
+      "n": 4,
+      "mean": 1.0,
+      "excluded_zero_canary": [
+        "exec-12",
+        "exec-22",
+        "exec-32",
+        "exec-41",
+        "exec-42",
+        "exec-52"
+      ]
+    },
+    "P2": {
+      "n": 4,
+      "mean": 0.0,
+      "excluded_zero_canary": [
+        "exec-12",
+        "exec-22",
+        "exec-32",
+        "exec-41",
+        "exec-42",
+        "exec-52"
+      ]
+    },
+    "P3": {
+      "n": 4,
+      "mean": 0.0,
+      "excluded_zero_canary": [
+        "exec-12",
+        "exec-22",
+        "exec-32",
+        "exec-41",
+        "exec-42",
+        "exec-52"
+      ]
+    }
+  },
+  "q15_pairs": [
+    {
+      "pair_id": "A",
+      "security_id": "exec-11",
+      "control_id": "exec-12",
+      "policy_id": "P0",
+      "predicted": false,
+      "actual": false,
+      "match": true
+    },
+    {
+      "pair_id": "A",
+      "security_id": "exec-11",
+      "control_id": "exec-12",
+      "policy_id": "P1",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "A",
+      "security_id": "exec-11",
+      "control_id": "exec-12",
+      "policy_id": "P2",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "A",
+      "security_id": "exec-11",
+      "control_id": "exec-12",
+      "policy_id": "P3",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "B",
+      "security_id": "exec-21",
+      "control_id": "exec-22",
+      "policy_id": "P0",
+      "predicted": false,
+      "actual": false,
+      "match": true
+    },
+    {
+      "pair_id": "B",
+      "security_id": "exec-21",
+      "control_id": "exec-22",
+      "policy_id": "P1",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "B",
+      "security_id": "exec-21",
+      "control_id": "exec-22",
+      "policy_id": "P2",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "B",
+      "security_id": "exec-21",
+      "control_id": "exec-22",
+      "policy_id": "P3",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "C",
+      "security_id": "exec-31",
+      "control_id": "exec-32",
+      "policy_id": "P0",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "C",
+      "security_id": "exec-31",
+      "control_id": "exec-32",
+      "policy_id": "P1",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "C",
+      "security_id": "exec-31",
+      "control_id": "exec-32",
+      "policy_id": "P2",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "C",
+      "security_id": "exec-31",
+      "control_id": "exec-32",
+      "policy_id": "P3",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "D",
+      "security_id": "exec-41",
+      "control_id": "exec-42",
+      "policy_id": "P0",
+      "predicted": false,
+      "actual": false,
+      "match": true
+    },
+    {
+      "pair_id": "D",
+      "security_id": "exec-41",
+      "control_id": "exec-42",
+      "policy_id": "P1",
+      "predicted": false,
+      "actual": false,
+      "match": true
+    },
+    {
+      "pair_id": "D",
+      "security_id": "exec-41",
+      "control_id": "exec-42",
+      "policy_id": "P2",
+      "predicted": false,
+      "actual": false,
+      "match": true
+    },
+    {
+      "pair_id": "D",
+      "security_id": "exec-41",
+      "control_id": "exec-42",
+      "policy_id": "P3",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "E",
+      "security_id": "exec-51",
+      "control_id": "exec-52",
+      "policy_id": "P0",
+      "predicted": false,
+      "actual": false,
+      "match": true
+    },
+    {
+      "pair_id": "E",
+      "security_id": "exec-51",
+      "control_id": "exec-52",
+      "policy_id": "P1",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "E",
+      "security_id": "exec-51",
+      "control_id": "exec-52",
+      "policy_id": "P2",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    },
+    {
+      "pair_id": "E",
+      "security_id": "exec-51",
+      "control_id": "exec-52",
+      "policy_id": "P3",
+      "predicted": true,
+      "actual": true,
+      "match": true
+    }
+  ],
+  "forecast_mismatches": [],
+  "pointer_resolution_failures": [],
+  "conforms_to_specification": true
+}

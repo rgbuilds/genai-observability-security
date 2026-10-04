@@ -1,0 +1,13 @@
+{
+  "schema_version": "canary_inventory.v1",
+  "execution_id": "exec-31",
+  "eligible_canaries": [
+    {
+      "canary_id": "C7",
+      "token": "SYNTH-RESID-C33D0003",
+      "location": "C7",
+      "payload_field": "authz.resource",
+      "eligible": true
+    }
+  ]
+}

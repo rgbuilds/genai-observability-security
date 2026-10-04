@@ -1,0 +1,13 @@
+{
+  "schema_version": "canary_inventory.v1",
+  "execution_id": "exec-21",
+  "eligible_canaries": [
+    {
+      "canary_id": "C3",
+      "token": "SYNTH-RETRVL-B22E0002",
+      "location": "C3",
+      "payload_field": "content.retrieved",
+      "eligible": true
+    }
+  ]
+}

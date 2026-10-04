@@ -1,0 +1,100 @@
+{
+  "schema_version": "answer_manifest.v1",
+  "execution_id": "exec-21",
+  "pair_id": "B",
+  "q15_expected": "security_relevant",
+  "questions": [
+    {
+      "id": "Q1",
+      "applicable": true,
+      "answer": "req-21"
+    },
+    {
+      "id": "Q2",
+      "applicable": true,
+      "answer": "untrusted"
+    },
+    {
+      "id": "Q3",
+      "applicable": true,
+      "answer": "yes"
+    },
+    {
+      "id": "Q4",
+      "applicable": true,
+      "answer": "doc-2100"
+    },
+    {
+      "id": "Q5",
+      "applicable": true,
+      "answer": {
+        "provider": "mock",
+        "name": "fixture-model",
+        "operation": "chat.completion"
+      }
+    },
+    {
+      "id": "Q6",
+      "applicable": true,
+      "answer": "yes"
+    },
+    {
+      "id": "Q7",
+      "applicable": true,
+      "answer": "get_note"
+    },
+    {
+      "id": "Q8",
+      "applicable": true,
+      "answer": "no"
+    },
+    {
+      "id": "Q9",
+      "applicable": true,
+      "answer": "allow"
+    },
+    {
+      "id": "Q10",
+      "applicable": true,
+      "answer": "allowed"
+    },
+    {
+      "id": "Q11",
+      "applicable": true,
+      "answer": "none"
+    },
+    {
+      "id": "Q12",
+      "applicable": true,
+      "answer": "yes"
+    },
+    {
+      "id": "Q13",
+      "applicable": true,
+      "answer": "retrieval"
+    },
+    {
+      "id": "Q14",
+      "applicable": true,
+      "registered_edges": [
+        {
+          "parent": "sp-21-req",
+          "child": "sp-21-ret"
+        },
+        {
+          "parent": "sp-21-req",
+          "child": "sp-21-mdl"
+        },
+        {
+          "parent": "sp-21-req",
+          "child": "sp-21-tol"
+        }
+      ]
+    },
+    {
+      "id": "Q15",
+      "applicable": true,
+      "answer": "security_relevant"
+    }
+  ]
+}

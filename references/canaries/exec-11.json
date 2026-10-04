@@ -1,0 +1,13 @@
+{
+  "schema_version": "canary_inventory.v1",
+  "execution_id": "exec-11",
+  "eligible_canaries": [
+    {
+      "canary_id": "C1",
+      "token": "SYNTH-USERIN-A11F0001",
+      "location": "C1",
+      "payload_field": "content.user",
+      "eligible": true
+    }
+  ]
+}

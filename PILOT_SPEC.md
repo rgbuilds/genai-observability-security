@@ -1,10 +1,10 @@
 # Pilot scenario and grading specification
 
-Status: DRAFT FOR RESEARCHER REVIEW — not approved. No graders implemented. No fixtures written. No experiment run.
+Status: IMPLEMENTATION-VALIDATION — fixtures, graders, and scoring choices recorded. A passing implementation check does not satisfy the contract section 7 research go/no-go.
 
-Date: 2026-10-04. Revised the same day to mark this suite as an implementation-validation pilot and to fix Q12/Q13, exposure denominators, F5 scope, and F3/F4 control confounds.
+Date: 2026-10-04. Revised the same day to mark this suite as an implementation-validation pilot, to fix Q12/Q13, exposure denominators, F5 scope, and F3/F4 control confounds, and to record extractor scoring choices including same-span Q15 and JSON-pointer evidence locations.
 
-This specification proposes the five-scenario implementation-validation pilot. It does not change frozen policies, pattern library v1, detector access, Q14/Q15 rules, or exposure scanning. It does not plant content markers or out-of-grammar canaries. Expected answers will live in separate reference manifests after approval; they are tabulated here only for review.
+This specification defines the five-scenario implementation-validation pilot. It does not change frozen policies, pattern library v1, detector access, Q14/Q15 rules, or exposure scanning. It does not plant content markers or out-of-grammar canaries. Expected answers live in separate reference manifests; they are tabulated here for review.
 
 ## 1. Role of this suite
 
@@ -105,7 +105,7 @@ The extractor applies the frozen contract rule to exported operational evidence 
 
 ### Reference manifests
 
-After approval, write one canary inventory and one answer key per execution. Proposed paths, not created in this phase:
+One canary inventory and one answer key per execution:
 
 ```
 references/canaries/exec-11.json
@@ -114,9 +114,9 @@ references/answers/exec-11.json
 
 The extractor receives telemetry plus question definitions. It must not read these files. The evaluator compares extractor output to the answer key only after extraction.
 
-Proposed canary-manifest fields: `execution_id`, `eligible_canaries[]` with `canary_id`, `token`, `location` (`C1`–`C7`), `payload_field`, `eligible`.
+Canary-manifest fields: `execution_id`, `eligible_canaries[]` with `canary_id`, `token`, `location` (`C1`–`C7`), `payload_field`, `eligible`.
 
-Proposed answer-manifest fields: `execution_id`, `pair_id`, `q15_expected` (`benign` \| `security_relevant`), `questions[]` with `id`, `applicable`, `answer`, `registered_edges` (Q14 only). Applicability in the manifest is execution-level, not policy-level.
+Answer-manifest fields: `execution_id`, `pair_id`, `q15_expected` (`benign` \| `security_relevant`), `questions[]` with `id`, `applicable`, `answer`, `registered_edges` (Q14 only). Applicability in the manifest is execution-level, not policy-level.
 
 ## 4. Question applicability (policy-independent)
 
@@ -175,6 +175,25 @@ Q12 must distinguish “detector ran and found nothing” from “policy dropped
 Canonical streams carry `detector_pass` (`not_run` \| `completed`). That field is runtime processing state, not a forensic answer, and is not copied into the export. `apply_runtime_detectors` is the only step that sets `completed` and writes per-span lists (empty or populated). `apply_policy` rejects `not_run` streams so an unprocessed fixture cannot export `[]` as a completed negative. Transforms do not rerun detectors.
 
 P0 omits the `detector_events` key. P1–P3 retain the list produced by the detector pass. No `detector_evidence=dropped` enum is added to P0.
+
+### 4.2 Recorded scoring choices
+
+These choices freeze extractor/evaluator behavior for this suite. They do not change the contract predicates. They were recorded because the contract left the comparison details unspecified.
+
+| Topic | Recorded choice | Why |
+| --- | --- | --- |
+| Q10 `status_code` | Prefer tool-span `security.authz_decision` when present. Otherwise map the **tool** span `status_code` (`401\|403 → denied`, `200 → allowed`). Do not use the request-span code. Unmapped codes are `missing`. | A request span is `200` on `exec-31` while the tool is `403`. Using the request code would score Q10 as `allowed`. |
+| Q2 / Q8 / Q9 / Q11 markers | Read only structured `security.*` fields. This suite plants no content-marker vocabulary and does not invent one. | Invented phrases would give P1/P2 credit the tables forecast as missing/0. |
+| Q15 clause (c) | Same-span: `security.privilege_class = privileged` together with `security.authz_decision = allow` **or** `status = ok` on **that span**. A privileged tool plus an `ok` request span is not enough. | “Together with” is evaluated on one span. |
+| Q15 otherwise | If no clause matches, classify `benign`. The expected label is never read from the export, fixture id, or filename. | Frozen contract rule. |
+| Q3 | `kind == retrieval` only. No frozen retrieval-operation-name list. | Avoid scoring from span names. |
+| Q5 | Structured answer `{provider, name, operation}` compared field-wise to the reference. | The spec lists three tokens without a concatenation rule. |
+| Q4 | Extractor emits exported `retrieval.source_id` and `retrieval.hash`. Evaluator accepts an exact registered identifier or `opaque_identifier(registered)`. | Extractor must not read the answer key; P3 retains an opaque id. |
+| Q14 | Credit if the registered edge set is a **subset** of extracted `parent_span_id` edges. Timestamp order is not evidence. | Contract: retained links “contain the registered edge set.” |
+| Q13 multiple stages | One distinct stage → that stage; more than one → `ambiguous`. | Not exercised by this suite. |
+| Evidence locations | JSON pointers into the **serialized export artifact** (canonical JSON: UTF-8, sorted keys, compact separators, `ensure_ascii=false`, `exclude_none`). Credit requires at least one pointer that resolves in that document. | The artifact of record is the written export, not an in-memory model dump. |
+
+Applicability stays on the execution’s answer manifest and is identical across P0–P3.
 
 ## 5. Predetermined implementation-check results
 
@@ -464,15 +483,14 @@ Matching this table validates the Q15 extractor against the frozen rule. It does
 
 ## 10. Decisions still requiring review
 
-Resolved unless you object: implementation-validation framing; Q13 applicability follows the reference event, not the policy; zero eligible canaries ⇒ N/A on every execution; exposure n = 4; F5 deferral is scope; F3/F4 controls are different-operation comparisons; C7 on `exec-31` kept; no content markers; detector-drop representation (section 4.1) adopted.
+Resolved unless you object: implementation-validation framing; Q13 applicability follows the reference event, not the policy; zero eligible canaries ⇒ N/A on every execution; exposure n = 4; F5 deferral is scope; F3/F4 controls are different-operation comparisons; C7 on `exec-31` kept; no content markers; detector-drop representation (section 4.1) adopted; scoring choices in section 4.2 adopted.
 
-Still open before fixtures and graders:
+Adopted for this implementation-validation suite: 5 templates + 5 additional controls (10 executions); F1/F2 carry `get_note` so Q6–Q11 apply; manifests at `references/canaries/` and `references/answers/`.
 
-1. **Counts.** Confirm 5 templates + 5 additional controls (10 executions).
-2. **F1/F2 include `get_note`.** Confirm those paths should carry a read tool so Q6–Q11 apply.
-3. **Manifest paths.** Confirm `references/canaries/` and `references/answers/` after this spec is approved.
-4. **When to authorize a research-feasibility stage** (section 6), including any F5 pair or same-operation authorization pair.
+Still open:
+
+1. **When to authorize a research-feasibility stage** (section 6), including any F5 pair or same-operation authorization pair. A passing implementation-validation run does not authorize that stage.
 
 ## 11. Out of scope for this phase
 
-Detector-drop representation and pipeline rejection of unprocessed streams are implemented. Do not add pilot fixtures, graders, or execute the pilot in this phase. After the remaining composition decisions, next steps are fixtures and reference manifests, then graders that consume exports plus question definitions only.
+Do not expand the suite, plant content markers, or begin realistic-model capture. Do not treat a matching implementation-validation report as the contract section 7 research go/no-go.

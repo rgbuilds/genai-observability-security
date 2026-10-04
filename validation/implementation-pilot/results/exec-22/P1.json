@@ -1,0 +1,299 @@
+{
+  "execution_id": "exec-22",
+  "pair_id": "B",
+  "policy_id": "P1",
+  "request_id": "req-22",
+  "canonical_hash": "f94d66c0c3e459d7b8b403f07967953cd73b94dfdac546305d43a75b8a29b155",
+  "export_path": "exports/exec-22/P1.json",
+  "export_bytes": 1711,
+  "export_hash": "b60de5c492a8fb75a966d5217e91ec00697dc1a980a51b9e610345cea2198f80",
+  "applicable_denominator": 14,
+  "applicable_correct": 10,
+  "forensic_coverage": 0.7142857142857143,
+  "q15_extracted": "benign",
+  "q15_expected": "benign",
+  "q15_credit": 1,
+  "exposure": {
+    "applicable": false,
+    "eligible_count": 0,
+    "exposed_count": null,
+    "rate_label": "N/A",
+    "exposed_ids": [],
+    "leaked_foreign_tokens": [],
+    "predicted": "N/A"
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "req-22",
+      "expected": "req-22",
+      "evidence": [
+        {
+          "pointer": "/request_id",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "untrusted",
+      "evidence": []
+    },
+    {
+      "id": "Q3",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "yes",
+      "expected": "yes",
+      "evidence": [
+        {
+          "pointer": "/spans/1/kind",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": [
+        "doc-2100",
+        "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      ],
+      "expected": "doc-2100",
+      "evidence": [
+        {
+          "pointer": "/spans/1/retrieval/source_id",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/1/retrieval/hash",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": {
+        "operation": "chat.completion",
+        "provider": "mock",
+        "name": "fixture-model"
+      },
+      "expected": {
+        "provider": "mock",
+        "name": "fixture-model",
+        "operation": "chat.completion"
+      },
+      "evidence": [
+        {
+          "pointer": "/spans/2/name",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/2/model/provider",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/2/model/name",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "yes",
+      "expected": "yes",
+      "evidence": [
+        {
+          "pointer": "/spans/3/kind",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q7",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "get_note",
+      "expected": "get_note",
+      "evidence": [
+        {
+          "pointer": "/spans/3/tool/name",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q8",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "no",
+      "evidence": []
+    },
+    {
+      "id": "Q9",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "allow",
+      "evidence": []
+    },
+    {
+      "id": "Q10",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "allowed",
+      "expected": "allowed",
+      "evidence": [
+        {
+          "pointer": "/spans/3/status_code",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q11",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "none",
+      "evidence": []
+    },
+    {
+      "id": "Q12",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "no",
+      "expected": "no",
+      "evidence": [
+        {
+          "pointer": "/spans/0/detector_events",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/1/detector_events",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/2/detector_events",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/3/detector_events",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q13",
+      "applicable": false,
+      "credit": null,
+      "predicted": null,
+      "actual": null,
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": null,
+      "evidence": []
+    },
+    {
+      "id": "Q14",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": [
+        {
+          "parent": "sp-22-req",
+          "child": "sp-22-mdl"
+        },
+        {
+          "parent": "sp-22-req",
+          "child": "sp-22-ret"
+        },
+        {
+          "parent": "sp-22-req",
+          "child": "sp-22-tol"
+        }
+      ],
+      "expected": null,
+      "evidence": [
+        {
+          "pointer": "/spans/1/parent_span_id",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/2/parent_span_id",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/3/parent_span_id",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q15",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "benign",
+      "expected": "benign",
+      "evidence": [
+        {
+          "pointer": "/spans",
+          "resolves_in_artifact": true
+        }
+      ]
+    }
+  ],
+  "discrepancies": []
+}

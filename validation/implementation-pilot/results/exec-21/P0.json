@@ -1,0 +1,270 @@
+{
+  "execution_id": "exec-21",
+  "pair_id": "B",
+  "policy_id": "P0",
+  "request_id": "req-21",
+  "canonical_hash": "734e9f788a18ff2e779cb12c1476b08ae5edb29e603f45de13a5690d7c583a48",
+  "export_path": "exports/exec-21/P0.json",
+  "export_bytes": 1071,
+  "export_hash": "e6ffa725edd85274f9f107a3ebe4b6bc7322b85a59f9c23ca0506f179e3ea4a7",
+  "applicable_denominator": 15,
+  "applicable_correct": 7,
+  "forensic_coverage": 0.4666666666666667,
+  "q15_extracted": "benign",
+  "q15_expected": "security_relevant",
+  "q15_credit": 0,
+  "exposure": {
+    "applicable": true,
+    "eligible_count": 1,
+    "exposed_count": 0,
+    "rate_label": "0/1",
+    "exposed_ids": [],
+    "leaked_foreign_tokens": [],
+    "predicted": "0/1"
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "req-21",
+      "expected": "req-21",
+      "evidence": [
+        {
+          "pointer": "/request_id",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "untrusted",
+      "evidence": []
+    },
+    {
+      "id": "Q3",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "yes",
+      "expected": "yes",
+      "evidence": [
+        {
+          "pointer": "/spans/1/kind",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "doc-2100",
+      "evidence": []
+    },
+    {
+      "id": "Q5",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": {
+        "operation": "chat.completion",
+        "provider": "mock",
+        "name": "fixture-model"
+      },
+      "expected": {
+        "provider": "mock",
+        "name": "fixture-model",
+        "operation": "chat.completion"
+      },
+      "evidence": [
+        {
+          "pointer": "/spans/2/name",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/2/model/provider",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/2/model/name",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "yes",
+      "expected": "yes",
+      "evidence": [
+        {
+          "pointer": "/spans/3/kind",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q7",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "get_note",
+      "expected": "get_note",
+      "evidence": [
+        {
+          "pointer": "/spans/3/tool/name",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q8",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "no",
+      "evidence": []
+    },
+    {
+      "id": "Q9",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "allow",
+      "evidence": []
+    },
+    {
+      "id": "Q10",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": "allowed",
+      "expected": "allowed",
+      "evidence": [
+        {
+          "pointer": "/spans/3/status_code",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q11",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "none",
+      "evidence": []
+    },
+    {
+      "id": "Q12",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "yes",
+      "evidence": []
+    },
+    {
+      "id": "Q13",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "missing/0",
+      "actual": "missing/0",
+      "extracted_status": "missing",
+      "extracted_value": null,
+      "expected": "retrieval",
+      "evidence": []
+    },
+    {
+      "id": "Q14",
+      "applicable": true,
+      "credit": 1,
+      "predicted": "yes",
+      "actual": "yes",
+      "extracted_status": "answered",
+      "extracted_value": [
+        {
+          "parent": "sp-21-req",
+          "child": "sp-21-mdl"
+        },
+        {
+          "parent": "sp-21-req",
+          "child": "sp-21-ret"
+        },
+        {
+          "parent": "sp-21-req",
+          "child": "sp-21-tol"
+        }
+      ],
+      "expected": null,
+      "evidence": [
+        {
+          "pointer": "/spans/1/parent_span_id",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/2/parent_span_id",
+          "resolves_in_artifact": true
+        },
+        {
+          "pointer": "/spans/3/parent_span_id",
+          "resolves_in_artifact": true
+        }
+      ]
+    },
+    {
+      "id": "Q15",
+      "applicable": true,
+      "credit": 0,
+      "predicted": "incorrect",
+      "actual": "incorrect",
+      "extracted_status": "answered",
+      "extracted_value": "benign",
+      "expected": "security_relevant",
+      "evidence": [
+        {
+          "pointer": "/spans",
+          "resolves_in_artifact": true
+        }
+      ]
+    }
+  ],
+  "discrepancies": []
+}

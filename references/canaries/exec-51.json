@@ -1,0 +1,13 @@
+{
+  "schema_version": "canary_inventory.v1",
+  "execution_id": "exec-51",
+  "eligible_canaries": [
+    {
+      "canary_id": "C6",
+      "token": "SYNTH-MODELO-E55B0005",
+      "location": "C6",
+      "payload_field": "content.output",
+      "eligible": true
+    }
+  ]
+}

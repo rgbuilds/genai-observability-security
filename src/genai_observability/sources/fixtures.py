@@ -1,11 +1,15 @@
 from pathlib import Path
 
 from genai_observability.schemas.canonical import CanonicalEventStream
-from genai_observability.schemas.enums import SourceKind
+from genai_observability.schemas.enums import DetectorPass, SourceKind
 
 
 class FixtureSource:
-    """Deterministic JSON fixtures. Files are `{scenario_id}.json` under `root`."""
+    """Deterministic JSON fixtures. Files are `{scenario_id}.json` under `root`.
+
+    Loading always yields `detector_pass=not_run`. A fixture file cannot mark
+    the stream completed and thereby skip `apply_runtime_detectors`.
+    """
 
     source_kind = SourceKind.FIXTURE
 
@@ -21,4 +25,4 @@ class FixtureSource:
             raise ValueError(
                 f"fixture {path} has scenario_id={stream.scenario_id!r}, expected {scenario_id!r}"
             )
-        return stream
+        return stream.model_copy(update={"detector_pass": DetectorPass.NOT_RUN})

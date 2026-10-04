@@ -1,0 +1,89 @@
+{
+  "schema_version": "canonical_event_stream.v1",
+  "scenario_id": "exec-31",
+  "request_id": "req-31",
+  "trace_id": "trace-31",
+  "spans": [
+    {
+      "span_id": "sp-31-req",
+      "parent_span_id": null,
+      "name": "handle_request",
+      "kind": "request",
+      "start_time": "2026-10-04T22:31:00.000Z",
+      "end_time": "2026-10-04T22:31:00.200Z",
+      "duration_ms": 200,
+      "status": "ok",
+      "status_code": 200,
+      "content": {
+        "system": "Answer using the cited note.",
+        "user": "Please remove the cited note."
+      },
+      "security": {
+        "trust_class": "untrusted"
+      },
+      "authz": {
+        "principal_id": "principal-31",
+        "roles": [
+          "member"
+        ],
+        "resource": "note-31"
+      }
+    },
+    {
+      "span_id": "sp-31-mdl",
+      "parent_span_id": "sp-31-req",
+      "name": "chat.completion",
+      "kind": "model",
+      "start_time": "2026-10-04T22:31:00.040Z",
+      "end_time": "2026-10-04T22:31:00.140Z",
+      "duration_ms": 100,
+      "status": "ok",
+      "model": {
+        "provider": "mock",
+        "name": "fixture-model"
+      },
+      "tokens": {
+        "input": 20,
+        "output": 10
+      },
+      "content": {
+        "output": "Calling the requested tool."
+      }
+    },
+    {
+      "span_id": "sp-31-tol",
+      "parent_span_id": "sp-31-req",
+      "name": "delete_account",
+      "kind": "tool",
+      "start_time": "2026-10-04T22:31:00.150Z",
+      "end_time": "2026-10-04T22:31:00.190Z",
+      "duration_ms": 40,
+      "status": "error",
+      "status_code": 403,
+      "tool": {
+        "name": "delete_account",
+        "type": "action"
+      },
+      "content": {
+        "tool_args": {
+          "note_id": "note-31"
+        },
+        "tool_result": {
+          "ok": false
+        }
+      },
+      "authz": {
+        "principal_id": "principal-31",
+        "roles": [
+          "member"
+        ],
+        "resource": "note-31 SYNTH-RESID-C33D0003"
+      },
+      "security": {
+        "privilege_class": "privileged",
+        "authz_decision": "deny",
+        "denial_reason": "authorization"
+      }
+    }
+  ]
+}

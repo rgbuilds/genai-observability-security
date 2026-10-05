@@ -10,3 +10,5 @@ build/
 runs/
 .env
 .DS_Store
+# Captured traces, excerpts, exports, and grade outputs can reproduce raw model text.
+private/

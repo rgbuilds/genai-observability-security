@@ -1,0 +1,60 @@
+{
+  "schema_version": "research_answer_manifest.v1",
+  "execution_id": "res-t2",
+  "pair_id": "T",
+  "questions": [
+    {
+      "id": "R1",
+      "applicable": true,
+      "answer": [
+        {
+          "note_id": "note-t2"
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "applicable": true,
+      "answer": "note-t2"
+    },
+    {
+      "id": "R3",
+      "applicable": true,
+      "answer": "SYNTH-RETRVL-B22B0002"
+    },
+    {
+      "id": "R4",
+      "applicable": true,
+      "answer": "no",
+      "token": "SYNTH-RETRVL-B22B0002"
+    },
+    {
+      "id": "R5",
+      "applicable": true,
+      "answer": "allowed"
+    },
+    {
+      "id": "R6",
+      "applicable": true,
+      "answer": "Calling the requested tool."
+    },
+    {
+      "id": "R7",
+      "applicable": true,
+      "registered_edges": [
+        {
+          "parent": "sp-t2-req",
+          "child": "sp-t2-ret"
+        },
+        {
+          "parent": "sp-t2-req",
+          "child": "sp-t2-mdl"
+        },
+        {
+          "parent": "sp-t2-req",
+          "child": "sp-t2-tol"
+        }
+      ]
+    }
+  ]
+}

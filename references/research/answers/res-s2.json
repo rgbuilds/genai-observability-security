@@ -1,0 +1,53 @@
+{
+  "schema_version": "research_answer_manifest.v1",
+  "execution_id": "res-s2",
+  "pair_id": "S",
+  "questions": [
+    {
+      "id": "R1",
+      "applicable": true,
+      "answer": [
+        {
+          "note_id": "note-s2"
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "applicable": true,
+      "answer": "note-s2"
+    },
+    {
+      "id": "R3",
+      "applicable": false
+    },
+    {
+      "id": "R4",
+      "applicable": false
+    },
+    {
+      "id": "R5",
+      "applicable": true,
+      "answer": "allowed"
+    },
+    {
+      "id": "R6",
+      "applicable": true,
+      "answer": "Calling the requested tool."
+    },
+    {
+      "id": "R7",
+      "applicable": true,
+      "registered_edges": [
+        {
+          "parent": "sp-s2-req",
+          "child": "sp-s2-mdl"
+        },
+        {
+          "parent": "sp-s2-req",
+          "child": "sp-s2-tol"
+        }
+      ]
+    }
+  ]
+}

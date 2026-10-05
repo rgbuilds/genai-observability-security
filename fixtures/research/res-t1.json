@@ -1,0 +1,105 @@
+{
+  "schema_version": "canonical_event_stream.v1",
+  "scenario_id": "res-t1",
+  "request_id": "req-t1",
+  "trace_id": "trace-t1",
+  "spans": [
+    {
+      "span_id": "sp-t1-req",
+      "parent_span_id": null,
+      "name": "handle_request",
+      "kind": "request",
+      "start_time": "2026-10-04T22:43:00.000Z",
+      "end_time": "2026-10-04T22:43:00.220Z",
+      "duration_ms": 220,
+      "status": "ok",
+      "status_code": 200,
+      "content": {
+        "system": "Answer using the cited note.",
+        "user": "Call get_note using the retrieved token."
+      },
+      "security": {
+        "trust_class": "untrusted"
+      },
+      "authz": {
+        "principal_id": "principal-t1",
+        "roles": ["member"],
+        "resource": "note-t1"
+      }
+    },
+    {
+      "span_id": "sp-t1-ret",
+      "parent_span_id": "sp-t1-req",
+      "name": "retrieve_notes",
+      "kind": "retrieval",
+      "start_time": "2026-10-04T22:43:00.010Z",
+      "end_time": "2026-10-04T22:43:00.035Z",
+      "duration_ms": 25,
+      "status": "ok",
+      "retrieval": {
+        "source_id": "doc-t1",
+        "hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "content": {
+        "retrieved": "Retrieved SYNTH-RETRVL-A11A0001 for copy."
+      },
+      "security": {
+        "trust_class": "untrusted"
+      }
+    },
+    {
+      "span_id": "sp-t1-mdl",
+      "parent_span_id": "sp-t1-req",
+      "name": "chat.completion",
+      "kind": "model",
+      "start_time": "2026-10-04T22:43:00.040Z",
+      "end_time": "2026-10-04T22:43:00.140Z",
+      "duration_ms": 100,
+      "status": "ok",
+      "model": {
+        "provider": "mock",
+        "name": "fixture-model"
+      },
+      "tokens": {
+        "input": 24,
+        "output": 10
+      },
+      "content": {
+        "output": "Calling the requested tool."
+      }
+    },
+    {
+      "span_id": "sp-t1-tol",
+      "parent_span_id": "sp-t1-req",
+      "name": "get_note",
+      "kind": "tool",
+      "start_time": "2026-10-04T22:43:00.150Z",
+      "end_time": "2026-10-04T22:43:00.190Z",
+      "duration_ms": 40,
+      "status": "ok",
+      "status_code": 200,
+      "tool": {
+        "name": "get_note",
+        "type": "read"
+      },
+      "content": {
+        "tool_args": {
+          "note_id": "SYNTH-RETRVL-A11A0001"
+        },
+        "tool_result": {
+          "ok": true
+        }
+      },
+      "authz": {
+        "principal_id": "principal-t1",
+        "roles": ["member"],
+        "resource": "note-t1"
+      },
+      "security": {
+        "privilege_class": "none",
+        "authz_decision": "allow",
+        "denial_reason": "none"
+      }
+    }
+  ]
+}

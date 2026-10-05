@@ -78,10 +78,12 @@ OUTPUT_USD_PER_MILLION = 0.60
 COST_PAD = 1.25
 INPUT_PAD_TOKENS = 256
 
-# Recorded 2026-10-04 from https://developers.openai.com/api/docs/models/gpt-4o-mini
-# Re-verify immediately before any later live authorization. This is not a live check.
+# Re-checked 2026-10-05 against https://developers.openai.com/api/docs/models/gpt-4o-mini
+# Snapshot gpt-4o-mini-2024-07-18 is still listed. Function calling and Chat Completions
+# are supported. Context 128k, max output 16384. Listed text rates: input $0.15,
+# cached input $0.075, output $0.60 per 1M tokens. Do not send the floating alias.
 OFFICIAL_DOC_CHECK: dict[str, Any] = {
-    "checked_on": "2026-10-04",
+    "checked_on": "2026-10-05",
     "url": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
     "snapshot": PINNED_MODEL,
     "floating_alias_forbidden": "gpt-4o-mini",
@@ -96,6 +98,7 @@ OFFICIAL_DOC_CHECK: dict[str, Any] = {
     "live_recheck_required": True,
 }
 
+# Default process state. A paid run is opt-in via GENAI_LIVE_CAPTURE=1 on the live command.
 LIVE_CAPTURE_AUTHORIZED = False
 
 

@@ -1,6 +1,6 @@
 # Research-feasibility plan (second stage)
 
-Status: LOCAL IMPLEMENTATION APPROVED for the R-checklist, pairs S/T, extraction boundaries, R4 missing/no rule, and retention rules. **Live / paid capture is not authorized.** Appendix A freezes the capture protocol. No model API calls are permitted until a later written authorization after a pre-run doc re-check.
+Status: LOCAL IMPLEMENTATION APPROVED for the R-checklist, pairs S/T, extraction boundaries, R4 missing/no rule, and retention rules. **Opt-in live capture is authorized** as of 2026-10-05, bounded by Appendix A. The default process still does not send. A paid run requires `GENAI_LIVE_CAPTURE=1` and `OPENAI_API_KEY`.
 
 Date: 2026-10-04. Revised to record local-implementation approval and to add Appendix A.
 
@@ -316,7 +316,9 @@ A proceed decision does not authorize the 24–30 scenario full study.
 
 **Authorized now (local only):** R graders; scripted S/T fixtures and synthetic answers; a capture adapter exercised with **mocked** API responses; unit tests; Appendix A recorded as the intended live protocol.
 
-**Not authorized:** any live model HTTP request; a paid capture run; treating S/T retention-forecast matches as research evidence; changing P0–P3, library v1, or Q1–Q15; content-marker planting on validation fixtures; `untrusted_propagation`; P4.
+**Authorized on request (2026-10-05):** one opt-in paid capture command, `python -m genai_observability.research.live_capture`, only when `GENAI_LIVE_CAPTURE=1` and `OPENAI_API_KEY` are set. It uses pinned snapshot `gpt-4o-mini-2024-07-18`, the Appendix A budget, and writes under `private/captures/`. Docs were re-checked the same day; prices and the snapshot still match Appendix A.5.
+
+**Not authorized:** treating S/T retention-forecast matches as research evidence; changing P0–P3, library v1, or Q1–Q15; content-marker planting on validation fixtures; `untrusted_propagation`; P4. A live run is not research go/no-go evidence by itself.
 
 Captured streams, captured answer excerpts, captured policy exports, and captured extraction/result files stay under `private/` (gitignored). They can reproduce raw text.
 
@@ -334,7 +336,7 @@ Captured streams, captured answer excerpts, captured policy exports, and capture
 8. S/T retention forecasts vs U capture lessons.
 9. VALIDATION_REPORT.md remains implementation evidence only.
 
-Not approved: live / paid capture. Appendix A is the intended live protocol, not authorization to execute it.
+Opt-in live capture is approved under Appendix A. The command does not send unless `GENAI_LIVE_CAPTURE=1` is set in that process.
 
 ## Appendix A — Capture protocol (frozen before any live run)
 

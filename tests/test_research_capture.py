@@ -64,6 +64,33 @@ def test_live_client_and_authorization_flag_refuse_paid_capture() -> None:
         LiveOpenAIClient().complete({"model": PINNED_MODEL})
 
 
+def test_authorized_live_client_sends_only_the_pinned_model() -> None:
+    seen: dict = {}
+
+    def sender(api_key: str, payload: dict) -> dict:
+        seen["api_key"] = api_key
+        seen["payload"] = payload
+        return _stop("acknowledged.")
+
+    client = LiveOpenAIClient("sk-test", authorized=True, sender=sender)
+    record = CaptureAdapter(client).capture_prompt("cap-u5")
+    assert record.stream is not None
+    assert seen["payload"]["model"] == PINNED_MODEL
+    assert seen["payload"]["max_tokens"] == 512
+    assert "sk-test" not in json.dumps(seen["payload"])
+    with pytest.raises(LiveCaptureNotAuthorized):
+        client.complete({"model": "gpt-4o-mini", "messages": []})
+
+
+def test_live_command_does_not_send_without_opt_in(monkeypatch) -> None:
+    monkeypatch.delenv("GENAI_LIVE_CAPTURE", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    from genai_observability.research.live_capture import main
+
+    with pytest.raises(SystemExit, match="Live capture is off"):
+        main()
+
+
 def test_official_doc_snapshot_is_pinned_and_requires_recheck() -> None:
     assert OFFICIAL_DOC_CHECK["snapshot"] == "gpt-4o-mini-2024-07-18"
     assert OFFICIAL_DOC_CHECK["function_calling"] is True

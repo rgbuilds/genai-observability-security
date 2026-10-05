@@ -217,10 +217,14 @@ def exercise_capture(private_dir: Path | None = None) -> dict[str, Any]:
         guard.restore()
 
     network_imports = _imports_in_research_package()
+    allowed_network_files = {
+        "src/genai_observability/research/exercise_capture.py",
+        "src/genai_observability/research/live_http.py",
+    }
     adapter_imports = [
         item
         for item in network_imports
-        if not item.startswith("src/genai_observability/research/exercise_capture.py")
+        if item.split(":", 1)[0] not in allowed_network_files
     ]
     checklist_path = root / "checklist.json"
     checklist_path.write_text("{}\n", encoding="utf-8")

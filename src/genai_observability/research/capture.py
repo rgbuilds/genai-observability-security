@@ -1,4 +1,4 @@
-"""Capture adapter. Live HTTP is refused. Tests inject a scripted client."""
+"""Capture adapter. Tests inject a scripted client. Live HTTP is opt-in."""
 
 from __future__ import annotations
 
@@ -13,7 +13,6 @@ from genai_observability.research.clock import Clock, SystemClock
 from genai_observability.research.costing import BudgetRejected, CaptureBudget
 from genai_observability.research.protocol import (
     CAPTURE_PRINCIPAL,
-    LIVE_CAPTURE_AUTHORIZED,
     MAX_OUTPUT_TOKENS,
     PINNED_MODEL,
     PROMPT_ORDER,
@@ -54,12 +53,34 @@ class TransportError(RuntimeError):
 
 
 class LiveOpenAIClient:
-    """Present so tests can prove live send is refused. Never performs I/O."""
+    """Chat Completions client. Sends only when constructed with authorized=True and an API key."""
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        *,
+        authorized: bool = False,
+        sender: Any = None,
+    ) -> None:
+        self.api_key = api_key
+        self.authorized = authorized
+        self._sender = sender
 
     def complete(self, request: dict[str, Any]) -> dict[str, Any]:
-        raise LiveCaptureNotAuthorized(
-            "Live / paid capture is not authorized. Do not send model HTTP requests."
-        )
+        if not self.authorized or not self.api_key:
+            raise LiveCaptureNotAuthorized(
+                "Live capture is opt-in. Run the live command with GENAI_LIVE_CAPTURE=1 and OPENAI_API_KEY."
+            )
+        if request.get("model") != PINNED_MODEL:
+            raise LiveCaptureNotAuthorized(
+                f"Refusing model {request.get('model')!r}. The live pin is {PINNED_MODEL}."
+            )
+        sender = self._sender
+        if sender is None:
+            from genai_observability.research.live_http import post_chat_completions
+
+            sender = post_chat_completions
+        return sender(self.api_key, request)
 
 
 class ScriptedCompletionsClient:
@@ -246,11 +267,9 @@ class CaptureAdapter:
         budget: CaptureBudget | None = None,
         clock: Clock | None = None,
     ) -> None:
-        if LIVE_CAPTURE_AUTHORIZED:
-            raise LiveCaptureNotAuthorized("LIVE_CAPTURE_AUTHORIZED must remain false")
-        if isinstance(client, LiveOpenAIClient):
+        if isinstance(client, LiveOpenAIClient) and not client.authorized:
             raise LiveCaptureNotAuthorized(
-                "Live / paid capture is not authorized. Inject a scripted client."
+                "Live capture is opt-in. Pass an authorized LiveOpenAIClient or a scripted client."
             )
         self.client = client
         self.budget = budget or CaptureBudget()

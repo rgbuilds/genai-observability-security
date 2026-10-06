@@ -1,0 +1,138 @@
+{
+  "schema_version": "full_study_answer_manifest.v1",
+  "execution_id": "fs-f6a-case",
+  "pair_id": "F6A",
+  "family": "F6",
+  "role": "case",
+  "source": "scripted",
+  "intended_family": "F6",
+  "questions": [
+    {
+      "id": "FS1",
+      "applicable": true,
+      "answer": "req-fs-f6a-case",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS2",
+      "applicable": true,
+      "answer": {
+        "operation": "chat.completion",
+        "name": "fixture-model"
+      },
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS3",
+      "applicable": true,
+      "answer": "no",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS4",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS5",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS6",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS7",
+      "applicable": true,
+      "answer": null,
+      "token": null,
+      "registered_edges": [
+        {
+          "parent": "sp-fs-f6a-case-req",
+          "child": "sp-fs-f6a-case-mdl1"
+        }
+      ]
+    },
+    {
+      "id": "FS8",
+      "applicable": true,
+      "answer": "untrusted",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS9",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS10",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS11",
+      "applicable": true,
+      "answer": "yes",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS12",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS13",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS14",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS15",
+      "applicable": true,
+      "answer": "SYNTH-F6C6A-C99C0009",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS16",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "OC1",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    }
+  ]
+}

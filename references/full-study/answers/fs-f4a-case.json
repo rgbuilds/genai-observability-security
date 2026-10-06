@@ -1,0 +1,151 @@
+{
+  "schema_version": "full_study_answer_manifest.v1",
+  "execution_id": "fs-f4a-case",
+  "pair_id": "F4A",
+  "family": "F4",
+  "role": "case",
+  "source": "scripted",
+  "intended_family": "F4",
+  "questions": [
+    {
+      "id": "FS1",
+      "applicable": true,
+      "answer": "req-fs-f4a-case",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS2",
+      "applicable": true,
+      "answer": {
+        "operation": "chat.completion",
+        "name": "fixture-model"
+      },
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS3",
+      "applicable": true,
+      "answer": "no",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS4",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS5",
+      "applicable": true,
+      "answer": "delete_account",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS6",
+      "applicable": true,
+      "answer": "allowed",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS7",
+      "applicable": true,
+      "answer": null,
+      "token": null,
+      "registered_edges": [
+        {
+          "parent": "sp-fs-f4a-case-req",
+          "child": "sp-fs-f4a-case-mdl1"
+        },
+        {
+          "parent": "sp-fs-f4a-case-req",
+          "child": "sp-fs-f4a-case-tol1"
+        },
+        {
+          "parent": "sp-fs-f4a-case-req",
+          "child": "sp-fs-f4a-case-mdl2"
+        }
+      ]
+    },
+    {
+      "id": "FS8",
+      "applicable": true,
+      "answer": "untrusted",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS9",
+      "applicable": true,
+      "answer": "yes",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS10",
+      "applicable": true,
+      "answer": "none",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS11",
+      "applicable": true,
+      "answer": "yes",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS12",
+      "applicable": true,
+      "answer": [
+        {
+          "note_id": "note-f4a",
+          "memo": "SYNTH-F4C4A-F66F0006"
+        }
+      ],
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS13",
+      "applicable": true,
+      "answer": "note-f4a",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS14",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS15",
+      "applicable": true,
+      "answer": "The privileged delete completed.",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS16",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "OC1",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Experiment contract: GenAI observability privacy and forensic utility
 
-Status: DRAFT — scaffolding-blocking decisions resolved 2026-10-04; remaining decisions and overall contract approval still pending.
+Status: DRAFT — scaffolding-blocking decisions resolved 2026-10-04; full-study protocol `full-study-protocol.v1` records the feasibility decision and the full-study decision rule as of 2026-10-05. Live full-study capture is not authorized.
 
 Draft date: 2026-10-04.
 
@@ -256,3 +256,15 @@ The eventual evidence pack should include setup, counts, policy definitions, met
 - **Artifact retention and publication (before full-study freeze):** Decide which synthetic traces and reference manifests may be committed or released, local retention rules, and the eventual public reproducibility package. Repository visibility remains private during design and pilot.
 
 Review record: scaffolding-blocking decisions approved 2026-10-04 with the Q14/Q15 constraints above. Pattern library v1 and the pre-transform detector pipeline approved 2026-10-04; propagation detector deferred. Detector-drop representation (omit vs `[]` vs populated list; reject unprocessed streams) adopted 2026-10-04. Overall contract approval, remaining decisions, pilot authorization, and full-study authorization have not been recorded.
+
+## 12. Amendment 2026-10-05 — feasibility decision and full-study ties
+
+This amendment does not authorize live capture or the 24–30 scenario publication run. It records decisions that `FULL_STUDY_PROPOSAL.md` required before implementation.
+
+**Feasibility.** The second-stage gate in `RESEARCH_FEASIBILITY_ASSESSMENT.md` is **proceed toward a full-study proposal**. The six captured streams and their frozen R1–R7 scores stay feasibility evidence. They are not full-study observations and must not be pooled with `full_study_checklist.v1`.
+
+**Section 7 pilot screen vs full-study decision rule.** The clause that P3 must occupy a meaningfully distinct position from P0 and P1 was a **pilot screening** rule. It is not a full-study success requirement. The full study measures exposure and coverage under unchanged P0–P3. Ties, reversals, and mixed results are valid. Do not add, drop, or retune questions, policies, or canaries to manufacture a P3 gap.
+
+**Full-study freeze (local mocked gate).** Scenario counts, controls, the FS/OC1 checklist, exclusions, aggregation, and stop rules are those in `FULL_STUDY_PROTOCOL.md` version `full-study-protocol.v1`. Q1–Q15 remain the validation checklist. R1–R7 remain the feasibility checklist. Do not average the three.
+
+**Still not authorized:** a paid full-study capture, model shopping after outputs, P4, `untrusted_propagation`, and publication claims.

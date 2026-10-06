@@ -1,0 +1,13 @@
+{
+  "schema_version": "canary_inventory.v1",
+  "execution_id": "fs-f2b-case",
+  "eligible_canaries": [
+    {
+      "canary_id": "C5-1",
+      "token": "SYNTH-F2C5B-D44D0004",
+      "location": "C5",
+      "payload_field": "content.tool_result",
+      "eligible": true
+    }
+  ]
+}

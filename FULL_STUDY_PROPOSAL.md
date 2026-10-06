@@ -1,6 +1,6 @@
 # Full-study proposal: GenAI telemetry privacy and forensic utility
 
-Status: **proposal for researcher review**. No full-suite scenarios, graders, captures, or runs are authorized by this document. Proposed on 2026-10-04 from `RESEARCH_FEASIBILITY_ASSESSMENT.md` and the earlier contract. The six captured streams remain a feasibility sample and are not full-study observations.
+Status: **proposal retained as the design brief**. Open choices are resolved in `FULL_STUDY_PROTOCOL.md` (`full-study-protocol.v1`). Local mocked implementation is in progress under that protocol. This document still does not authorize live capture. Proposed on 2026-10-04 from `RESEARCH_FEASIBILITY_ASSESSMENT.md` and the earlier contract. The six captured streams remain a feasibility sample and are not full-study observations.
 
 ## 1. Decision this proposal supports
 

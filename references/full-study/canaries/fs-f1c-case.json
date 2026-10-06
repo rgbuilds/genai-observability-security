@@ -1,0 +1,13 @@
+{
+  "schema_version": "canary_inventory.v1",
+  "execution_id": "fs-f1c-case",
+  "eligible_canaries": [
+    {
+      "canary_id": "C1-1",
+      "token": "SYNTH-F1C1C-D00D000A",
+      "location": "C1",
+      "payload_field": "content.user",
+      "eligible": true
+    }
+  ]
+}

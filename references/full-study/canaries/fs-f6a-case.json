@@ -1,0 +1,13 @@
+{
+  "schema_version": "canary_inventory.v1",
+  "execution_id": "fs-f6a-case",
+  "eligible_canaries": [
+    {
+      "canary_id": "C6-1",
+      "token": "SYNTH-F6C6A-C99C0009",
+      "location": "C6",
+      "payload_field": "content.output",
+      "eligible": true
+    }
+  ]
+}

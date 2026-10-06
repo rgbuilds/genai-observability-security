@@ -1,0 +1,13 @@
+{
+  "schema_version": "canary_inventory.v1",
+  "execution_id": "fs-f3a-case",
+  "eligible_canaries": [
+    {
+      "canary_id": "C7-1",
+      "token": "SYNTH-F3C7A-E55E0005",
+      "location": "C7",
+      "payload_field": "authz.principal_id",
+      "eligible": true
+    }
+  ]
+}

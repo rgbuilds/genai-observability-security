@@ -1,0 +1,154 @@
+{
+  "schema_version": "full_study_answer_manifest.v1",
+  "execution_id": "fs-f2b-case",
+  "pair_id": "F2B",
+  "family": "F2",
+  "role": "case",
+  "source": "scripted",
+  "intended_family": "F2",
+  "questions": [
+    {
+      "id": "FS1",
+      "applicable": true,
+      "answer": "req-fs-f2b-case",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS2",
+      "applicable": true,
+      "answer": {
+        "operation": "chat.completion",
+        "name": "fixture-model"
+      },
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS3",
+      "applicable": true,
+      "answer": "yes",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS4",
+      "applicable": true,
+      "answer": "note-f2b",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS5",
+      "applicable": true,
+      "answer": "get_note",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS6",
+      "applicable": true,
+      "answer": "allowed",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS7",
+      "applicable": true,
+      "answer": null,
+      "token": null,
+      "registered_edges": [
+        {
+          "parent": "sp-fs-f2b-case-req",
+          "child": "sp-fs-f2b-case-ret"
+        },
+        {
+          "parent": "sp-fs-f2b-case-req",
+          "child": "sp-fs-f2b-case-mdl1"
+        },
+        {
+          "parent": "sp-fs-f2b-case-req",
+          "child": "sp-fs-f2b-case-tol1"
+        },
+        {
+          "parent": "sp-fs-f2b-case-req",
+          "child": "sp-fs-f2b-case-mdl2"
+        }
+      ]
+    },
+    {
+      "id": "FS8",
+      "applicable": true,
+      "answer": "untrusted",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS9",
+      "applicable": true,
+      "answer": "no",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS10",
+      "applicable": true,
+      "answer": "none",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS11",
+      "applicable": true,
+      "answer": "yes",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS12",
+      "applicable": true,
+      "answer": [
+        {
+          "note_id": "note-f2b"
+        }
+      ],
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS13",
+      "applicable": true,
+      "answer": "note-f2b",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS14",
+      "applicable": true,
+      "answer": "Title-only retrieval for note-f2",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS15",
+      "applicable": true,
+      "answer": "Read complete.",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS16",
+      "applicable": true,
+      "answer": "no",
+      "token": "Title-only retrieval for note-f2",
+      "registered_edges": null
+    },
+    {
+      "id": "OC1",
+      "applicable": true,
+      "answer": "no",
+      "token": "Title-only retrieval for note-f2",
+      "registered_edges": null
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "schema_version": "full_study_answer_manifest.v1",
+  "execution_id": "fs-f4d-ctrl",
+  "pair_id": "F4D",
+  "family": "F4",
+  "role": "control",
+  "source": "mocked-capture",
+  "intended_family": "F4",
+  "questions": [
+    {
+      "id": "FS1",
+      "applicable": true,
+      "answer": "req-fs-f4d-ctrl",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS2",
+      "applicable": true,
+      "answer": {
+        "operation": "chat.completion",
+        "name": "gpt-4o-mini-2024-07-18"
+      },
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS3",
+      "applicable": true,
+      "answer": "no",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS4",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS5",
+      "applicable": true,
+      "answer": "delete_account",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS6",
+      "applicable": true,
+      "answer": "denied",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS7",
+      "applicable": true,
+      "answer": null,
+      "token": null,
+      "registered_edges": [
+        {
+          "parent": "sp-fs-f4d-ctrl-req",
+          "child": "sp-fs-f4d-ctrl-mdl1"
+        },
+        {
+          "parent": "sp-fs-f4d-ctrl-req",
+          "child": "sp-fs-f4d-ctrl-tol1"
+        },
+        {
+          "parent": "sp-fs-f4d-ctrl-req",
+          "child": "sp-fs-f4d-ctrl-mdl2"
+        }
+      ]
+    },
+    {
+      "id": "FS8",
+      "applicable": true,
+      "answer": "untrusted",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS9",
+      "applicable": true,
+      "answer": "yes",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS10",
+      "applicable": true,
+      "answer": "authorization",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS11",
+      "applicable": true,
+      "answer": "no",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS12",
+      "applicable": true,
+      "answer": [
+        {
+          "note_id": "note-f4d"
+        }
+      ],
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS13",
+      "applicable": true,
+      "answer": "note-f4d",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS14",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS15",
+      "applicable": true,
+      "answer": "Denied.",
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "FS16",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    },
+    {
+      "id": "OC1",
+      "applicable": false,
+      "answer": null,
+      "token": null,
+      "registered_edges": null
+    }
+  ]
+}

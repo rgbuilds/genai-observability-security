@@ -1,0 +1,860 @@
+{
+  "schema_version": "full_study_sanitized_aggregate.v1",
+  "evidence_role": "authoritative-clean-live-replay",
+  "protocol_version": "full-study-protocol.v1",
+  "checklist_version": "full_study_checklist.v1",
+  "capture_metadata": {
+    "paid_capture_count": 1,
+    "model": "gpt-4o-mini-2024-07-18",
+    "requests_used": 44,
+    "request_cap": 80,
+    "estimated_spent_usd": 0.021606374999999994,
+    "failed_execution_count": 0,
+    "unattempted_execution_count": 0,
+    "stop_reason": null
+  },
+  "replay_status": {
+    "planned_executions": 24,
+    "realized_executions": 24,
+    "planned_exports": 96,
+    "realized_exports": 96,
+    "failed_run_count": 0,
+    "unresolved_credited_pointers": 0,
+    "detector_runs": 0,
+    "ok": true
+  },
+  "integrity": {
+    "capture_hashed_artifacts": 123,
+    "capture_artifacts_including_manifest": 124,
+    "capture_time_source_files_verified": 69,
+    "replay_hashed_artifacts": 363,
+    "replay_artifacts_including_manifest": 364,
+    "replay_permission_violations": 0,
+    "authoritative_git_commit": "2d31ab6f71ae4a32111b905ec9f30c9b76150b91",
+    "authoritative_git_dirty": false,
+    "earlier_replay_git_dirty": true,
+    "earlier_replay_role": "reproducibility-check-only",
+    "exports_identical": true,
+    "extractions_identical": true,
+    "results_identical": true
+  },
+  "applicability_denominators": {
+    "FS1": 24,
+    "FS2": 24,
+    "FS3": 24,
+    "FS4": 10,
+    "FS5": 20,
+    "FS6": 20,
+    "FS7": 24,
+    "FS8": 24,
+    "FS9": 20,
+    "FS10": 20,
+    "FS11": 24,
+    "FS12": 20,
+    "FS13": 20,
+    "FS14": 10,
+    "FS15": 24,
+    "FS16": 10,
+    "OC1": 10
+  },
+  "aggregates": {
+    "coverage_by_policy": {
+      "P0": 0.4346046110751993,
+      "P1": 0.8065072182719241,
+      "P2": 0.7672915319974143,
+      "P3": 0.7329778065072183
+    },
+    "coverage_by_source": {
+      "mocked-capture": {
+        "P0": 0.4346046110751993,
+        "P1": 0.8065072182719241,
+        "P2": 0.7672915319974143,
+        "P3": 0.7329778065072183
+      }
+    },
+    "coverage_by_family": {
+      "F1": {
+        "P0": 0.5164835164835164,
+        "P1": 0.8131868131868132,
+        "P2": 0.8131868131868132,
+        "P3": 0.8131868131868132
+      },
+      "F2": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.7058823529411764,
+        "P3": 0.6470588235294118
+      },
+      "F3": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "F4": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "F5": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.7058823529411764,
+        "P3": 0.6470588235294118
+      },
+      "F6": {
+        "P0": 0.46218487394957986,
+        "P1": 0.8403361344537814,
+        "P2": 0.8403361344537814,
+        "P3": 0.7521008403361344
+      }
+    },
+    "coverage_by_category": {
+      "operational": {
+        "P0": 0.9315068493150684,
+        "P1": 1.0,
+        "P2": 1.0,
+        "P3": 1.0
+      },
+      "security": {
+        "P0": 0.0,
+        "P1": 0.2727272727272727,
+        "P2": 0.2727272727272727,
+        "P3": 1.0
+      },
+      "content": {
+        "P0": 0.0,
+        "P1": 1.0,
+        "P2": 0.8297872340425532,
+        "P3": 0.0
+      }
+    },
+    "exposure_by_policy": {
+      "P0": 0.0,
+      "P1": 1.0,
+      "P2": 0.0,
+      "P3": 0.0
+    },
+    "executions_with_any_exposure": {
+      "P0": 0,
+      "P1": 6,
+      "P2": 0,
+      "P3": 0
+    },
+    "exposure_by_location": {
+      "P0": {},
+      "P1": {
+        "C1": 2,
+        "C3": 4
+      },
+      "P2": {},
+      "P3": {}
+    },
+    "zero_canary_executions": 18,
+    "mixed_descriptive": {
+      "label": "unweighted subset means; not a winner score",
+      "scripted": {},
+      "mocked-capture": {
+        "P0": 0.4346046110751993,
+        "P1": 0.8065072182719241,
+        "P2": 0.7672915319974143,
+        "P3": 0.7329778065072183
+      }
+    }
+  },
+  "paired_policy_differences": [
+    {
+      "execution_id": "fs-f1c-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f1c-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f1d-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.5714285714285714,
+        "P1": 0.8571428571428571,
+        "P2": 0.8571428571428571,
+        "P3": 0.8571428571428571
+      },
+      "p3_minus_p0": 0.2857142857142857,
+      "p1_minus_p0": 0.2857142857142857
+    },
+    {
+      "execution_id": "fs-f1d-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.5714285714285714,
+        "P1": 0.8571428571428571,
+        "P2": 0.8571428571428571,
+        "P3": 0.8571428571428571
+      },
+      "p3_minus_p0": 0.2857142857142857,
+      "p1_minus_p0": 0.2857142857142857
+    },
+    {
+      "execution_id": "fs-f2c-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.5882352941176471,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f2c-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.8235294117647058,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f2d-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.5882352941176471,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f2d-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.8235294117647058,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f3c-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f3c-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f3d-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f3d-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f4c-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f4c-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f4d-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f4d-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.46153846153846156,
+        "P1": 0.7692307692307693,
+        "P2": 0.7692307692307693,
+        "P3": 0.7692307692307693
+      },
+      "p3_minus_p0": 0.3076923076923077,
+      "p1_minus_p0": 0.3076923076923077
+    },
+    {
+      "execution_id": "fs-f5c-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.5882352941176471,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f5c-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.8235294117647058,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f5d-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.5882352941176471,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f5d-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.8235294117647058,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f6c-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.5714285714285714,
+        "P1": 0.8571428571428571,
+        "P2": 0.8571428571428571,
+        "P3": 0.8571428571428571
+      },
+      "p3_minus_p0": 0.2857142857142857,
+      "p1_minus_p0": 0.2857142857142857
+    },
+    {
+      "execution_id": "fs-f6c-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.5714285714285714,
+        "P1": 0.8571428571428571,
+        "P2": 0.8571428571428571,
+        "P3": 0.8571428571428571
+      },
+      "p3_minus_p0": 0.2857142857142857,
+      "p1_minus_p0": 0.2857142857142857
+    },
+    {
+      "execution_id": "fs-f6d-case",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.8235294117647058,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    },
+    {
+      "execution_id": "fs-f6d-ctrl",
+      "source": "mocked-capture",
+      "coverage": {
+        "P0": 0.35294117647058826,
+        "P1": 0.8235294117647058,
+        "P2": 0.8235294117647058,
+        "P3": 0.6470588235294118
+      },
+      "p3_minus_p0": 0.29411764705882354,
+      "p1_minus_p0": 0.4705882352941176
+    }
+  ],
+  "paired_case_control_differences": [
+    {
+      "pair_id": "F1C",
+      "policy_id": "P0",
+      "case_coverage": 0.46153846153846156,
+      "control_coverage": 0.46153846153846156,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F1C",
+      "policy_id": "P1",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F1C",
+      "policy_id": "P2",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F1C",
+      "policy_id": "P3",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F1D",
+      "policy_id": "P0",
+      "case_coverage": 0.5714285714285714,
+      "control_coverage": 0.5714285714285714,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F1D",
+      "policy_id": "P1",
+      "case_coverage": 0.8571428571428571,
+      "control_coverage": 0.8571428571428571,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F1D",
+      "policy_id": "P2",
+      "case_coverage": 0.8571428571428571,
+      "control_coverage": 0.8571428571428571,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F1D",
+      "policy_id": "P3",
+      "case_coverage": 0.8571428571428571,
+      "control_coverage": 0.8571428571428571,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F2C",
+      "policy_id": "P0",
+      "case_coverage": 0.35294117647058826,
+      "control_coverage": 0.35294117647058826,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F2C",
+      "policy_id": "P1",
+      "case_coverage": 0.8235294117647058,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F2C",
+      "policy_id": "P2",
+      "case_coverage": 0.5882352941176471,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": -0.23529411764705876
+    },
+    {
+      "pair_id": "F2C",
+      "policy_id": "P3",
+      "case_coverage": 0.6470588235294118,
+      "control_coverage": 0.6470588235294118,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F2D",
+      "policy_id": "P0",
+      "case_coverage": 0.35294117647058826,
+      "control_coverage": 0.35294117647058826,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F2D",
+      "policy_id": "P1",
+      "case_coverage": 0.8235294117647058,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F2D",
+      "policy_id": "P2",
+      "case_coverage": 0.5882352941176471,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": -0.23529411764705876
+    },
+    {
+      "pair_id": "F2D",
+      "policy_id": "P3",
+      "case_coverage": 0.6470588235294118,
+      "control_coverage": 0.6470588235294118,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F3C",
+      "policy_id": "P0",
+      "case_coverage": 0.46153846153846156,
+      "control_coverage": 0.46153846153846156,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F3C",
+      "policy_id": "P1",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F3C",
+      "policy_id": "P2",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F3C",
+      "policy_id": "P3",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F3D",
+      "policy_id": "P0",
+      "case_coverage": 0.46153846153846156,
+      "control_coverage": 0.46153846153846156,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F3D",
+      "policy_id": "P1",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F3D",
+      "policy_id": "P2",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F3D",
+      "policy_id": "P3",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F4C",
+      "policy_id": "P0",
+      "case_coverage": 0.46153846153846156,
+      "control_coverage": 0.46153846153846156,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F4C",
+      "policy_id": "P1",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F4C",
+      "policy_id": "P2",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F4C",
+      "policy_id": "P3",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F4D",
+      "policy_id": "P0",
+      "case_coverage": 0.46153846153846156,
+      "control_coverage": 0.46153846153846156,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F4D",
+      "policy_id": "P1",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F4D",
+      "policy_id": "P2",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F4D",
+      "policy_id": "P3",
+      "case_coverage": 0.7692307692307693,
+      "control_coverage": 0.7692307692307693,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F5C",
+      "policy_id": "P0",
+      "case_coverage": 0.35294117647058826,
+      "control_coverage": 0.35294117647058826,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F5C",
+      "policy_id": "P1",
+      "case_coverage": 0.8235294117647058,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F5C",
+      "policy_id": "P2",
+      "case_coverage": 0.5882352941176471,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": -0.23529411764705876
+    },
+    {
+      "pair_id": "F5C",
+      "policy_id": "P3",
+      "case_coverage": 0.6470588235294118,
+      "control_coverage": 0.6470588235294118,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F5D",
+      "policy_id": "P0",
+      "case_coverage": 0.35294117647058826,
+      "control_coverage": 0.35294117647058826,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F5D",
+      "policy_id": "P1",
+      "case_coverage": 0.8235294117647058,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F5D",
+      "policy_id": "P2",
+      "case_coverage": 0.5882352941176471,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": -0.23529411764705876
+    },
+    {
+      "pair_id": "F5D",
+      "policy_id": "P3",
+      "case_coverage": 0.6470588235294118,
+      "control_coverage": 0.6470588235294118,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F6C",
+      "policy_id": "P0",
+      "case_coverage": 0.5714285714285714,
+      "control_coverage": 0.5714285714285714,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F6C",
+      "policy_id": "P1",
+      "case_coverage": 0.8571428571428571,
+      "control_coverage": 0.8571428571428571,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F6C",
+      "policy_id": "P2",
+      "case_coverage": 0.8571428571428571,
+      "control_coverage": 0.8571428571428571,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F6C",
+      "policy_id": "P3",
+      "case_coverage": 0.8571428571428571,
+      "control_coverage": 0.8571428571428571,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F6D",
+      "policy_id": "P0",
+      "case_coverage": 0.35294117647058826,
+      "control_coverage": 0.35294117647058826,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F6D",
+      "policy_id": "P1",
+      "case_coverage": 0.8235294117647058,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F6D",
+      "policy_id": "P2",
+      "case_coverage": 0.8235294117647058,
+      "control_coverage": 0.8235294117647058,
+      "case_minus_control": 0.0
+    },
+    {
+      "pair_id": "F6D",
+      "policy_id": "P3",
+      "case_coverage": 0.6470588235294118,
+      "control_coverage": 0.6470588235294118,
+      "case_minus_control": 0.0
+    }
+  ],
+  "fs16_tool_argument_copying": {
+    "executions_applicable": 10,
+    "by_policy": {
+      "P0": {
+        "applicable": 10,
+        "credit": 0,
+        "yes": 0,
+        "no": 0,
+        "missing": 10
+      },
+      "P1": {
+        "applicable": 10,
+        "credit": 10,
+        "yes": 0,
+        "no": 10,
+        "missing": 0
+      },
+      "P2": {
+        "applicable": 10,
+        "credit": 6,
+        "yes": 0,
+        "no": 6,
+        "missing": 4
+      },
+      "P3": {
+        "applicable": 10,
+        "credit": 0,
+        "yes": 0,
+        "no": 0,
+        "missing": 10
+      }
+    }
+  },
+  "oc1_retrieval_to_final_output": {
+    "executions_applicable": 10,
+    "by_policy": {
+      "P0": {
+        "applicable": 10,
+        "credit": 0,
+        "yes": 0,
+        "no": 0,
+        "missing": 10
+      },
+      "P1": {
+        "applicable": 10,
+        "credit": 10,
+        "yes": 9,
+        "no": 1,
+        "missing": 0
+      },
+      "P2": {
+        "applicable": 10,
+        "credit": 6,
+        "yes": 5,
+        "no": 1,
+        "missing": 4
+      },
+      "P3": {
+        "applicable": 10,
+        "credit": 0,
+        "yes": 0,
+        "no": 0,
+        "missing": 10
+      }
+    }
+  }
+}

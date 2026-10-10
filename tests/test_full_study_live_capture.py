@@ -112,7 +112,11 @@ def test_official_doc_record_does_not_change_the_pin() -> None:
     assert OFFICIAL_DOC_CHECK["snapshot"] == PROPOSED_PINNED_MODEL
     assert OFFICIAL_DOC_CHECK["input_usd_per_million"] == 0.15
     assert OFFICIAL_DOC_CHECK["output_usd_per_million"] == 0.60
-    assert OFFICIAL_DOC_CHECK["live_recheck_required"] is True
+    assert OFFICIAL_DOC_CHECK["live_recheck_required"] is False
+    assert OFFICIAL_DOC_CHECK["checked_on"] == "2026-10-09"
+    assert OFFICIAL_DOC_CHECK["url"] == "https://developers.openai.com/api/docs/models/gpt-4o-mini"
+    assert OFFICIAL_DOC_CHECK["gate5_recheck_http"] is True
+    assert OFFICIAL_DOC_CHECK["evidence"]["default_snapshot"] == PROPOSED_PINNED_MODEL
     assert OFFICIAL_DOC_CHECK["gate5_prep_http"] is False
     assert PROPOSED_REQUEST_CAP == 80
     assert PROPOSED_DOLLAR_CEILING_USD == 15.00
@@ -127,16 +131,20 @@ def test_official_doc_record_does_not_change_the_pin() -> None:
 
 def test_completed_official_check_must_be_recent() -> None:
     completed = {**OFFICIAL_DOC_CHECK, "live_recheck_required": False}
+    stale = {**completed, "checked_on": "2026-10-05"}
     with pytest.raises(LiveCaptureNotAuthorized, match="stale"):
-        validate_official_doc_check(completed, today=date(2026, 10, 9))
+        validate_official_doc_check(stale, today=date(2026, 10, 9))
     fresh = {**completed, "checked_on": "2026-10-08"}
     assert validate_official_doc_check(fresh, today=date(2026, 10, 9)) == date(2026, 10, 8)
+    assert validate_official_doc_check(completed, today=date(2026, 10, 9)) == date(2026, 10, 9)
     future = {**completed, "checked_on": "2026-10-10"}
     with pytest.raises(LiveCaptureNotAuthorized, match="stale"):
         validate_official_doc_check(future, today=date(2026, 10, 9))
 
 
 def test_direct_live_adapter_send_cannot_bypass_official_gate(monkeypatch) -> None:
+    from genai_observability.full_study import live_adapter
+
     sent: list[dict] = []
     client = LiveOpenAIClient(
         "sk-test",
@@ -145,6 +153,11 @@ def test_direct_live_adapter_send_cannot_bypass_official_gate(monkeypatch) -> No
     )
     adapter = FullStudyCaptureAdapter(client, clock=DeterministicClock())
     monkeypatch.setenv(LIVE_ENV_FLAG, "1")
+    monkeypatch.setattr(
+        live_adapter,
+        "OFFICIAL_DOC_CHECK",
+        {**OFFICIAL_DOC_CHECK, "live_recheck_required": True},
+    )
     with pytest.raises(LiveCaptureNotAuthorized, match="recheck is still required"):
         adapter.capture_spec(spec_by_id()["fs-f6c-ctrl"])
     assert sent == []
@@ -456,12 +469,16 @@ def test_pending_recheck_makes_zero_client_calls(monkeypatch) -> None:
             calls["run"] += 1
             raise AssertionError("run must not be called")
 
-    assert OFFICIAL_DOC_CHECK["live_recheck_required"] is True
     assert OFFICIAL_DOC_CHECK["snapshot"] == PROPOSED_PINNED_MODEL
     assert OFFICIAL_DOC_CHECK["input_usd_per_million"] == 0.15
     assert OFFICIAL_DOC_CHECK["output_usd_per_million"] == 0.60
     monkeypatch.setenv(LIVE_ENV_FLAG, "1")
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
+    monkeypatch.setattr(
+        live_capture,
+        "OFFICIAL_DOC_CHECK",
+        {**OFFICIAL_DOC_CHECK, "live_recheck_required": True},
+    )
     monkeypatch.setattr(live_capture, "LiveOpenAIClient", FakeClient)
     monkeypatch.setattr(live_capture, "FullStudyCaptureAdapter", FakeAdapter)
     with pytest.raises(SystemExit, match="recheck is still required"):

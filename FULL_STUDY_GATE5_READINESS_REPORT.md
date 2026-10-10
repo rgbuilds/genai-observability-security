@@ -1,6 +1,6 @@
 # Full-study Gate 5 readiness report
 
-Status: **Gate 5 command prepared. Paid send is not authorized.** Protocol `full-study-protocol.v1` is unchanged in its scientific freeze (P0–P3, library v1, Q1–Q15, R1–R7, FS1–FS16, OC1, 48 executions). Amendment §13 records the live command, budget, and realized-derivation rule. Review fixes below do not fabricate a successful official recheck and do not change the recorded snapshot or prices. `LIVE_FULL_STUDY_AUTHORIZED` is false. No model API call and no HTTP request were made for this gate.
+Status: **Gate 5 command prepared. Paid send is not authorized.** Protocol `full-study-protocol.v1` is unchanged in its scientific freeze (P0–P3, library v1, Q1–Q15, R1–R7, FS1–FS16, OC1, 48 executions). Amendment §13 records the live command, budget, and realized-derivation rule. Official OpenAI docs were rechecked on **2026-10-09**; every frozen model and price fact still matches, so `live_recheck_required` is now false. The snapshot and standard rates were not changed. `LIVE_FULL_STUDY_AUTHORIZED` is false. No model API call was made.
 
 This report does not change `RESEARCH_FEASIBILITY_ASSESSMENT.md`, `private/research-replay/20261005T034345Z`, or the mocked-run scores in `FULL_STUDY_READINESS_REPORT.md`.
 
@@ -17,7 +17,7 @@ This report does not change `RESEARCH_FEASIBILITY_ASSESSMENT.md`, `private/resea
 
 ## Review fixes (this revision)
 
-1. **Mandatory official recheck.** `full_study.live_capture` refuses before constructing or invoking `LiveOpenAIClient` when `OFFICIAL_DOC_CHECK["live_recheck_required"]` is true. It also refuses a missing/invalid `checked_on`, a snapshot mismatch, an input or output price mismatch, `function_calling` that is not true, `max_output_tokens` below 512, a future date, or a completed check more than one UTC calendar day old. The recorded check stays `live_recheck_required=True` with snapshot `gpt-4o-mini-2024-07-18` and $0.15 / $0.60 per 1M. Tests show `GENAI_FULL_STUDY_LIVE=1` plus an API key still makes zero client constructions and zero `complete()` / `run()` calls.
+1. **Mandatory official recheck.** `full_study.live_capture` refuses before constructing or invoking `LiveOpenAIClient` when `OFFICIAL_DOC_CHECK["live_recheck_required"]` is true. It also refuses a missing/invalid `checked_on`, a snapshot mismatch, an input or output price mismatch, `function_calling` that is not true, `max_output_tokens` below 512, a future date, or a completed check more than one UTC calendar day old. Tests still prove that a pending-recheck record plus `GENAI_FULL_STUDY_LIVE=1` and an API key makes zero client constructions and zero `complete()` / `run()` calls. The recorded 2026-10-09 check is completed (`live_recheck_required=false`) because the official pages still match.
 
 2. **Independent source freeze and provenance.** Capture hashes are compared to `references/full-study/live_source_freeze.json`, which is outside the hashed set. The frozen set includes every `.py` file under `src/genai_observability/`, all four allowlists, and pattern library v1. A missing expected hash, a changed expected combined hash, or a changed frozen file refuses before any request and before a destination directory is created. Provenance records protocol and checklist versions, expected and observed freeze hashes, separate configuration and capture-input hashes, Git commit/description/status/dirty state, model, and budget.
 
@@ -48,18 +48,24 @@ Every attempted, partial, failed, and unattempted capture is written under a uni
 
 After a usable stream exists, detectors run once. Answer manifests, applicability, and canary eligibility come from that realized stream. A planted token is eligible only when it is present in its registered origin field. Expected completions are not plants. Output-only tokens are not invented.
 
-## Official model-page record (no HTTP this gate)
+## Official model-page record (2026-10-09 HTTP recheck)
 
-Last recorded official-page check remains **2026-10-05** against `https://developers.openai.com/api/docs/models/gpt-4o-mini`:
+Rechecked official OpenAI sources only. No Chat Completions or other model API call was made.
 
-| Recorded fact | Value |
-| --- | --- |
-| Snapshot | `gpt-4o-mini-2024-07-18` (floating alias `gpt-4o-mini` forbidden) |
-| API | Chat Completions; function calling |
-| Context / max output | 128000 / 16384 (`max_tokens=512` supported) |
-| Standard text rates | input $0.15 / 1M; cached input $0.075 / 1M; output $0.60 / 1M |
+| Recorded fact | Official evidence | Match |
+| --- | --- | --- |
+| Snapshot `gpt-4o-mini-2024-07-18` listed and default | [GPT-4o Mini](https://developers.openai.com/api/docs/models/gpt-4o-mini) (also [platform](https://platform.openai.com/docs/models/gpt-4o-mini)) | yes |
+| Chat Completions | `v1/chat/completions` Supported | yes |
+| Function calling | listed under Supported features | yes |
+| Context window | 128,000 | yes |
+| Max output tokens | 16,384 (`max_tokens=512` supported) | yes |
+| Standard input | $0.15 / 1M | yes |
+| Standard cached input | $0.075 / 1M | yes |
+| Standard output | $0.6 / 1M (= $0.60) | yes |
 
-Gate 5 prep on **2026-10-09** did not fetch the page (`gate5_prep_http=False`, `live_recheck_required=True`). A later paid send still requires an official HTTP recheck no more than one UTC calendar day before the run. If that page differs, stop; record a further amendment; do not change the pin in place and do not send.
+Pricing confirmation: [Pricing](https://developers.openai.com/api/docs/pricing) Standard table lists `gpt-4o-mini` at $0.15 / $0.075 / $0.60. Function-calling guide: `https://developers.openai.com/api/docs/guides/function-calling`. Fine-tuning and Batch tables were not used as standard inference prices. Floating alias `gpt-4o-mini` remains forbidden for sends.
+
+`checked_on=2026-10-09`, `live_recheck_required=false`. A completed check is valid for at most one UTC calendar day. If a later official page differs, stop; record a further amendment; do not change the pin in place and do not send.
 
 ## Mocked tests
 
@@ -69,7 +75,8 @@ Full pytest: **198 passed**. No network. The Gate 5 suite covers:
 
 - default-off CLI and unauthorized `LiveOpenAIClient`
 - missing `OPENAI_API_KEY` after opt-in
-- pending official recheck with env flag and API key: zero client calls
+- pending official recheck (patched record) with env flag and API key: zero client calls
+- recorded 2026-10-09 check completed; pin and prices unchanged
 - completed official check freshness and future-date rejection
 - direct adapter sends blocked at the actual send boundary before budget consumption
 - mutated or custom live budgets rejected before client invocation
@@ -105,19 +112,19 @@ Full pytest: **198 passed**. No network. The Gate 5 suite covers:
 
 | Tree | SHA-256 combined | Files |
 | --- | --- | ---: |
-| Complete package source plus policy configuration | `ff481dc797b4ebdb5ed5bb92886fc929402ada6daf9fe94db088dc3d4b70a721` | 69 |
-| Independent expected hash (`references/full-study/live_source_freeze.json`, not hashed) | `ff481dc797b4ebdb5ed5bb92886fc929402ada6daf9fe94db088dc3d4b70a721` | 1 |
-| `src/genai_observability/**/*.py` | `072109d97eea3c6e427e63eda97d1d1f7e8cc92191e7e44cd49001940de6e94a` | 64 |
-| Capture inputs (protocol, checklist, references, scenarios, tool surface) | `29db909f5101ffbd7327a6be33041915364d1de7dd9260fcdb8ee83ad34e7be9` | 5 |
-| `src/genai_observability/full_study/*.py` | `ca96b4c4076349eb7deeddca399e9cec55cd3ac67089d010a5cf737f2e2faf53` | 18 |
+| Complete package source plus policy configuration | `7cfc719220c03674c7cbeb40ddff2ff41c78e3ecd1a92e27ae3f4d09b20bb6b7` | 69 |
+| Independent expected hash (`references/full-study/live_source_freeze.json`, not hashed) | `7cfc719220c03674c7cbeb40ddff2ff41c78e3ecd1a92e27ae3f4d09b20bb6b7` | 1 |
+| `src/genai_observability/**/*.py` | `c65644e17a7e3e29cee6f1e0dd0f50e92e51addb5bdb017852b19931aa725275` | 64 |
+| Capture inputs (protocol, checklist, references, scenarios, tool surface) | `f71890c44896a6a2f93b152f17c8eb98f265eda933e625db60f3c2b59d5d25a4` | 5 |
+| `src/genai_observability/full_study/*.py` | `815194bc4548c656e16945ba294dd0a7a5d870aa2deb9c849a2c1cdf77a26047` | 18 |
 | Allowlists + pattern library v1 | `c396134aa1e531d577f98e64f6c7ab87a5ab36a362c9c4b126296328f2348e1f` | 5 |
 
-Git HEAD while writing this report: `6fca382` (working tree includes this Gate 5 prep and the review fixes). Package 0.1.0.
+Git HEAD before this official-recheck amendment: `52a2fdd` (the working tree includes the recheck record and regenerated freeze). Package 0.1.0.
 
 ## Still required before a paid send
 
 1. Gate 4 clean-commit freeze after researcher review of the exact 24-id list and the 80 / $15.00 ceiling.
-2. Official HTTP recheck of the model page and listed prices, then a recorded amendment that sets `live_recheck_required` to false only if the pin and prices still match. If anything differs, amend; do not silently retarget.
+2. If this 2026-10-09 official check is more than one UTC calendar day old at send time, recheck official pages again before sending. If anything differs, amend; do not silently retarget.
 3. A new unprinted API key. The key exposed during feasibility capture must stay revoked.
 4. Written authorization that is not this report and not protocol §13. Then, and only then, `GENAI_FULL_STUDY_LIVE=1`.
 

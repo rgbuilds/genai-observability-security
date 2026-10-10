@@ -1,6 +1,6 @@
 # Full-study protocol fs.v1
 
-Status: **FROZEN for local and mocked validation only.** Live / paid capture is not authorized. This protocol records every interpretation that `FULL_STUDY_PROPOSAL.md` left open. Code must follow this text. Feasibility scores in `RESEARCH_FEASIBILITY_ASSESSMENT.md` and `private/research-replay/20261005T034345Z` are not modified and are not full-study observations.
+Status: **FROZEN for local and mocked validation.** Gate 5 live-command preparation is recorded in §13. A paid send is **not** authorized. This protocol records every interpretation that `FULL_STUDY_PROPOSAL.md` left open. Code must follow this text. Feasibility scores in `RESEARCH_FEASIBILITY_ASSESSMENT.md` and `private/research-replay/20261005T034345Z` are not modified and are not full-study observations.
 
 Version: `full-study-protocol.v1`
 
@@ -30,7 +30,7 @@ P0–P3, pattern library v1, Q1–Q15, and R1–R7 stay as published. This check
 | Mixing scripted and captured? | Never average them into one winner. Report each source type, then an unweighted pair of subset means only as a descriptive companion, labeled mixed-descriptive. |
 | Zero-canary exposure? | N/A, excluded from exposure means, counted separately. Foreign-token leakage is a separate check. |
 | Bootstrap empty exposure stratum? | Exploratory bootstrap **omits** a replicate in which any resampled family/source stratum has zero eligible exposure executions. If more than half of replicates are omitted, report the interval unavailable. |
-| Live capture default? | Disabled. `LIVE_CAPTURE_AUTHORIZED` remains false. Full-study code must not send HTTP. |
+| Live capture default? | Disabled. `LIVE_FULL_STUDY_AUTHORIZED` remains false. The Gate 5 command exists and still refuses unless `GENAI_FULL_STUDY_LIVE=1` is set in that process. See §13. |
 
 ## 1. Unit of analysis
 
@@ -191,11 +191,11 @@ Planned counts: 24 templates, 24 controls, 48 executions, 192 policy exports if 
 
 ## 9. Capture protocol for this gate
 
-Mocked capture only. System instructions, tools `get_note` and `delete_account`, and the conservative cost function are the feasibility surface unless a later live amendment replaces them. Full-study notes, principals, and grants are those in the scenario registry.
+Scripted executions stay local fixtures (`build_stream`). They are not sent and are not rewritten by the live adapter.
 
-Mocked adapter: inject a scripted completions client; persist each stream; select references from the canonical stream only; refuse `LiveOpenAIClient` unless a future written authorization sets a new flag. This revision does not add that flag.
+Mocked capture remains the local validation path: inject a scripted completions client; persist each stream; select references from the canonical stream only.
 
-Proposed live bound (not authorized): 24 capture-once executions, up to 80 requests, USD 15.00, same pinned snapshot. Feasibility’s 12-request / $5 ceiling does not carry forward.
+Gate 5 adds an opt-in live command for the 24 capture-once executions (`source=="mocked-capture"`, registry order). It is off unless `GENAI_FULL_STUDY_LIVE=1`. `LIVE_FULL_STUDY_AUTHORIZED` stays false in source. Bound: 80 HTTP requests, USD 15.00 conservative ceiling, input estimate 4096, `max_tokens=512`, temperature 0, snapshot `gpt-4o-mini-2024-07-18`. Feasibility’s 12-request / $5 ceiling does not carry forward. See §13.
 
 ## 10. Provenance and privacy
 
@@ -205,10 +205,34 @@ Do not commit live captured text. Do not print API keys. The key exposed during 
 
 ## 11. Gates
 
-This revision implements proposal gates 2–3 for **local mocked validation**. Gate 4 (clean-commit freeze before live) and gate 5 (live execution) are not authorized here.
+This revision implements proposal gates 2–3 for **local mocked validation**. Gate 4 (clean-commit freeze before a paid send) remains a researcher review. Gate 5 **preparation** (command, budget, realized-derivation, mocked failure tests) is recorded in §13. A paid send is not authorized here.
 
 ## 12. Stop / redesign / proceed for the mocked gate
 
 - **Pass local readiness** if 48 streams exist, 192 mocked exports grade, retention forecasts match section 5, extractors do not import answers, live send is refused, and private paths stay gitignored.
 - **Redesign** if FS16/OC1 treat drop/redaction as `no`, or if answers were selected from policy exports.
-- **Do not proceed to live capture** from this document alone.
+- **Do not proceed to a paid send** from this document alone. Gate 5 prep is not live authorization.
+
+## 13. Amendment 2026-10-09 — Gate 5 live-command preparation
+
+This amendment prepares the capture-once path. It does **not** authorize a paid send. It does **not** change P0–P3, pattern library v1, Q1–Q15, R1–R7, FS1–FS16, OC1, the 48 registered executions, or the scripted fixture builder.
+
+**Command.** `python -m genai_observability.full_study.live_capture` walks the 24 `source=="mocked-capture"` executions in registry order (`CAPTURE_ONCE_EXECUTION_IDS`). It uses the frozen prompts, `SYSTEM_INSTRUCTIONS`, tools `get_note` and `delete_account`, the full-study router grants, snapshot `gpt-4o-mini-2024-07-18`, temperature 0, and `max_tokens=512`. Scripted executions are unchanged and are not submitted.
+
+**Authorization.** `LIVE_FULL_STUDY_AUTHORIZED` remains `False` in source. The command refuses unless `GENAI_FULL_STUDY_LIVE=1` is set in that process. The mocked runner refuses both `GENAI_LIVE_CAPTURE=1` and `GENAI_FULL_STUDY_LIVE=1`. Feasibility’s `GENAI_LIVE_CAPTURE=1` does not enable this command.
+
+**Budget.** Conservative pre-request check: 80 HTTP requests, USD 15.00 ceiling, 4096 estimated input tokens. The actual live-send boundary requires the exact frozen `CaptureBudget` type, limits, and nonnegative in-bounds counters immediately before each request. A request is not sent if the next conservative cost would exceed the remaining ceiling. Transport retries count as requests (two attempts per hop). Feasibility defaults remain 12 requests / $5.00.
+
+**Response identity and artifact integrity.** A live response must report the exact snapshot `gpt-4o-mini-2024-07-18` before a model span is recorded; a missing or different reported model is a failed partial capture. `artifact_hashes.json` records SHA-256 for each persisted JSON capture, sidecar, processed stream, answer manifest, canary inventory, provenance file, unattempted list, and final run record. The manifest excludes itself from the hash set.
+
+**Persistence.** Every attempted, partial, failed, and unattempted capture is written under a unique gitignored `private/full-study-captures/<stamp>/` directory (`captures/`, `realized/`, `unattempted_prompts.json`, `provenance.json`, `run.json`). The run directory and every descendant directory use owner-only `0700` permissions; every artifact is created as `0600`, without first creating a more permissive file. Do not overwrite a nonempty destination.
+
+**Realized derivation.** After a usable stream exists, detectors run once. Answer manifests, applicability, and canary eligibility are taken from that realized stream. A planted token is eligible only when it is present in its registered origin field. Expected completions are not plants. Do not invent output-only canaries.
+
+**Official docs (no HTTP this gate).** Last recorded official-page check remains 2026-10-05: snapshot `gpt-4o-mini-2024-07-18`, function calling, `max_tokens=512` supported, standard input $0.15 / 1M and output $0.60 / 1M. Gate 5 prep on 2026-10-09 did not fetch the page. A completed check is valid for at most one UTC calendar day and a future-dated check is invalid. If a later official page differs, stop; record a further amendment; do not change the pin in place and do not send.
+
+**Send-path enforcement and exit status.** The live flag, authorized live client, recent official check, independent freeze, private persisted provenance, Git commit, and clean working tree are checked in the adapter immediately before each real client invocation. The CLI exits nonzero when any execution fails, any prompt is unattempted, or the run has a stop reason. Per-execution failures and the aggregate failed-id list are written to the run artifacts.
+
+**Freeze coverage.** The independent live freeze covers every `.py` file under `src/genai_observability/` plus P0–P3 allowlists and pattern library v1. Adding or changing any package source or policy configuration invalidates the freeze before a send.
+
+**Still required before a paid send.** Gate 4 clean-commit freeze, an official HTTP recheck of the model page and prices, a new unprinted API key, and an explicit written authorization that is not this amendment.

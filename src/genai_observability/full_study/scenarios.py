@@ -794,4 +794,10 @@ def pair_ids() -> list[str]:
     return sorted({item["pair_id"] for item in all_specs()})
 
 
+def capture_once_specs() -> list[dict[str, Any]]:
+    """Frozen live-capture order: registry order, capture-once executions only."""
+    return [item for item in all_specs() if item["source"] == "mocked-capture"]
+
+
 FULL_STUDY_EXECUTION_IDS: tuple[str, ...] = tuple(item["execution_id"] for item in all_specs())
+CAPTURE_ONCE_EXECUTION_IDS: tuple[str, ...] = tuple(item["execution_id"] for item in capture_once_specs())

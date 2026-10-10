@@ -19,6 +19,12 @@ def test_runner_refuses_live_env(monkeypatch, tmp_path: Path) -> None:
         run_full_study(tmp_path / "run")
 
 
+def test_runner_refuses_full_study_live_env(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setenv("GENAI_FULL_STUDY_LIVE", "1")
+    with pytest.raises(LiveCaptureNotAuthorized):
+        run_full_study(tmp_path / "run")
+
+
 def test_write_and_run_mocked_study(tmp_path: Path) -> None:
     counts = write_full_study_fixtures(tmp_path / "materialized")
     assert counts["executions"] == 48

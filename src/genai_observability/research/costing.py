@@ -47,20 +47,23 @@ class CaptureBudget:
     requests_used: int = 0
     spent_usd: float = 0.0
     rejections: list[str] = field(default_factory=list)
+    request_cap: int = REQUEST_CAP
+    dollar_ceiling_usd: float = DOLLAR_CEILING_USD
+    input_token_bound: int = INPUT_TOKEN_BOUND
 
     def check(self, request: dict[str, Any]) -> float:
         """Return conservative USD for this request, or raise BudgetRejected."""
         tokens = estimated_input_tokens(request)
-        if tokens > INPUT_TOKEN_BOUND:
+        if tokens > self.input_token_bound:
             reason = "input_bound"
             self.rejections.append(reason)
             raise BudgetRejected(reason)
-        if self.requests_used + 1 > REQUEST_CAP:
+        if self.requests_used + 1 > self.request_cap:
             reason = "request_cap"
             self.rejections.append(reason)
             raise BudgetRejected(reason)
         cost = conservative_request_usd(tokens)
-        if self.spent_usd + cost > DOLLAR_CEILING_USD:
+        if self.spent_usd + cost > self.dollar_ceiling_usd:
             reason = "dollar_ceiling"
             self.rejections.append(reason)
             raise BudgetRejected(reason)

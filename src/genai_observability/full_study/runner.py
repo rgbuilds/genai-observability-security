@@ -17,6 +17,7 @@ from genai_observability.full_study.inventory import all_tokens, inventory_from_
 from genai_observability.full_study.mock_capture import capture_mocked, scripted_responses_for
 from genai_observability.full_study.protocol import (
     CHECKLIST_VERSION,
+    LIVE_ENV_FLAG,
     LIVE_FULL_STUDY_AUTHORIZED,
     PROTOCOL_VERSION,
 )
@@ -89,6 +90,8 @@ def _refuse_live() -> None:
         raise LiveCaptureNotAuthorized("full-study live capture is not authorized")
     if os.environ.get("GENAI_LIVE_CAPTURE") == "1":
         raise LiveCaptureNotAuthorized("full-study runner refuses GENAI_LIVE_CAPTURE=1")
+    if os.environ.get(LIVE_ENV_FLAG) == "1":
+        raise LiveCaptureNotAuthorized("full-study runner refuses GENAI_FULL_STUDY_LIVE=1")
 
 
 def _stream_for(spec: dict[str, Any]):

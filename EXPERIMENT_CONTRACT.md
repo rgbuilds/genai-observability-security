@@ -268,3 +268,15 @@ This amendment does not authorize live capture or the 24–30 scenario publicati
 **Full-study freeze (local mocked gate).** Scenario counts, controls, the FS/OC1 checklist, exclusions, aggregation, and stop rules are those in `FULL_STUDY_PROTOCOL.md` version `full-study-protocol.v1`. Q1–Q15 remain the validation checklist. R1–R7 remain the feasibility checklist. Do not average the three.
 
 **Still not authorized:** a paid full-study capture, model shopping after outputs, P4, `untrusted_propagation`, and publication claims.
+
+## 13. Amendment 2026-10-09 — Gate 5 live-command preparation
+
+This amendment does **not** authorize a paid full-study send. It records that `full-study-protocol.v1` §13 now defines the opt-in command for the 24 capture-once executions, the 80-request / $15.00 conservative ceiling, realized-stream derivation, and the requirement to record a further amendment instead of silently changing the pinned snapshot.
+
+The process flag `LIVE_FULL_STUDY_AUTHORIZED` remains false. Default operation refuses live HTTP. `GENAI_FULL_STUDY_LIVE=1` is a separate explicit process flag from feasibility `GENAI_LIVE_CAPTURE=1`. Official model-page values were not re-fetched on 2026-10-09; the 2026-10-05 record stands and `live_recheck_required` remains true.
+
+The actual adapter send path, not only the CLI, must enforce the live flag, authorized live client, matching source/configuration freeze, private persisted provenance, clean committed Git state, and a completed official check no more than one UTC calendar day old. A future-dated check is invalid. Aggregate artifacts must list failed execution ids, and the live command must exit nonzero for any failed execution, unattempted prompt, or run stop reason.
+
+The live boundary must also enforce the exact frozen 80-request, USD 15.00, and 4096-estimated-input-token budget before each send. The API-reported model must equal the pinned snapshot before a model span is recorded. Persisted captures, processed streams, private answer manifests, canary inventories, provenance, and run metadata must have SHA-256 entries in the run's artifact-hash manifest.
+
+The live freeze covers the complete local `genai_observability` Python package and the published P0–P3 allowlists and pattern library. Private capture directories and descendants use owner-only `0700` permissions, and private artifacts are created as `0600` without a permissive intermediate state.

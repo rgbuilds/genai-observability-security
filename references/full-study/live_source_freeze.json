@@ -4,6 +4,11 @@
   "role": "independent-expected-hash",
   "note": "Gate 5 clean-freeze expected combined hash. This file is not included in the hashed capture-source set.",
   "files": [
+    "policies/allowlists/p0.v1.json",
+    "policies/allowlists/p1.v1.json",
+    "policies/allowlists/p2.v1.json",
+    "policies/allowlists/p3.v1.json",
+    "policies/pattern_libraries/pattern_library.v1.json",
     "src/genai_observability/__init__.py",
     "src/genai_observability/full_study/__init__.py",
     "src/genai_observability/full_study/aggregate.py",
@@ -18,6 +23,7 @@
     "src/genai_observability/full_study/protocol.py",
     "src/genai_observability/full_study/questions.py",
     "src/genai_observability/full_study/references.py",
+    "src/genai_observability/full_study/replay_live_capture.py",
     "src/genai_observability/full_study/runner.py",
     "src/genai_observability/full_study/scenarios.py",
     "src/genai_observability/full_study/select.py",
@@ -67,12 +73,7 @@
     "src/genai_observability/validation/__init__.py",
     "src/genai_observability/validation/predictions.py",
     "src/genai_observability/validation/provenance.py",
-    "src/genai_observability/validation/run_pilot.py",
-    "policies/allowlists/p0.v1.json",
-    "policies/allowlists/p1.v1.json",
-    "policies/allowlists/p2.v1.json",
-    "policies/allowlists/p3.v1.json",
-    "policies/pattern_libraries/pattern_library.v1.json"
+    "src/genai_observability/validation/run_pilot.py"
   ],
-  "combined": "7cfc719220c03674c7cbeb40ddff2ff41c78e3ecd1a92e27ae3f4d09b20bb6b7"
+  "combined": "80aa306b2b1dc91b3fe12803c9f32023d7a0df58fd0a5ddbbacae3c65e2306ee"
 }

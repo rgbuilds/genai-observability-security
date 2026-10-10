@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -33,6 +34,8 @@ from genai_observability.schemas.enums import DetectorPass
 from genai_observability.serialization import canonical_json_text
 
 UTC = timezone.utc
+PRIVATE_DIRECTORY_MODE = 0o700
+PRIVATE_FILE_MODE = 0o600
 
 
 class LiveCaptureNotAuthorized(RuntimeError):
@@ -115,11 +118,53 @@ class CaptureRecord:
 @dataclass
 class CaptureRun:
     records: list[CaptureRecord] = field(default_factory=list)
+    failed_prompt_ids: list[str] = field(default_factory=list)
     unattempted_prompt_ids: list[str] = field(default_factory=list)
     requests_used: int = 0
     estimated_spent_usd: float = 0.0
     stop_reason: str | None = None
     output_dir: Path | None = None
+
+
+def secure_capture_directory(
+    path: Path,
+    *,
+    root: Path | None = None,
+    exist_ok: bool = True,
+) -> Path:
+    """Create a capture directory and make its tree owner-only through root."""
+    destination = Path(path)
+    boundary = Path(root) if root is not None else destination
+    destination.mkdir(parents=True, exist_ok=exist_ok, mode=PRIVATE_DIRECTORY_MODE)
+    try:
+        destination.resolve().relative_to(boundary.resolve())
+    except ValueError as exc:
+        raise ValueError(f"capture directory {destination} is outside root {boundary}") from exc
+    current = destination
+    while True:
+        current.chmod(PRIVATE_DIRECTORY_MODE)
+        if current.resolve() == boundary.resolve():
+            break
+        current = current.parent
+    return destination
+
+
+def secure_capture_write_text(path: Path, text: str, *, root: Path | None = None) -> None:
+    """Write one owner-only UTF-8 capture artifact without a permissive creation window."""
+    destination = Path(path)
+    boundary = Path(root) if root is not None else destination.parent
+    secure_capture_directory(destination.parent, root=boundary)
+    flags = os.O_WRONLY | os.O_CREAT | os.O_TRUNC
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    descriptor = os.open(destination, flags, PRIVATE_FILE_MODE)
+    try:
+        os.fchmod(descriptor, PRIVATE_FILE_MODE)
+        with os.fdopen(descriptor, "w", encoding="utf-8", closefd=False) as handle:
+            handle.write(text)
+            handle.flush()
+    finally:
+        os.close(descriptor)
 
 
 def prepare_capture_dir(output_dir: Path | None = None) -> Path:
@@ -134,7 +179,7 @@ def prepare_capture_dir(output_dir: Path | None = None) -> Path:
         while dest.exists():
             dest = PRIVATE_CAPTURE_DIR / f"{stamp}-{suffix}"
             suffix += 1
-        dest.mkdir(parents=True, exist_ok=False)
+        secure_capture_directory(dest, exist_ok=False)
         return dest
     dest = Path(output_dir)
     if dest.exists() and dest.is_file():
@@ -143,7 +188,7 @@ def prepare_capture_dir(output_dir: Path | None = None) -> Path:
         raise NonemptyCaptureDirectoryError(
             f"destination is not empty: {dest}; pass a new path or omit it for a unique capture directory"
         )
-    dest.mkdir(parents=True, exist_ok=True)
+    secure_capture_directory(dest)
     return dest
 
 
@@ -221,9 +266,12 @@ def _stream_or_none(prompt_id: str, spans: list[dict[str, Any]]) -> CanonicalEve
     )
 
 
-def _write_json(path: Path, payload: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+def _write_json(path: Path, payload: Any, *, root: Path) -> None:
+    secure_capture_write_text(
+        path,
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
+        root=root,
+    )
 
 
 def persist_record(output_dir: Path | None, record: CaptureRecord) -> None:
@@ -232,7 +280,11 @@ def persist_record(output_dir: Path | None, record: CaptureRecord) -> None:
         return
     if record.stream is not None:
         stream_path = output_dir / f"{record.prompt_id}.json"
-        stream_path.write_text(canonical_json_text(record.stream), encoding="utf-8")
+        secure_capture_write_text(
+            stream_path,
+            canonical_json_text(record.stream),
+            root=output_dir,
+        )
     _write_json(
         output_dir / f"{record.prompt_id}.meta.json",
         {
@@ -244,6 +296,7 @@ def persist_record(output_dir: Path | None, record: CaptureRecord) -> None:
             "failures": record.failures,
             "partial": record.partial,
         },
+        root=output_dir,
     )
 
 
@@ -255,6 +308,7 @@ def persist_unattempted(output_dir: Path, run: CaptureRun) -> None:
             "stop_reason": run.stop_reason,
             "requests_used": run.requests_used,
         },
+        root=output_dir,
     )
 
 

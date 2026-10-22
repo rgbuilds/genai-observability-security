@@ -72,8 +72,11 @@ private/         Gitignored live captures, exports, extractions, and results
 tests/           Unit, integration, isolation, integrity, and security tests
 ```
 
-`genai_observability.paths` is the central path registry. Experiment modules
-use those constants instead of independently constructing repository paths.
+`genai_observability.paths` centralizes repository roots and shared artifact
+locations. Experiment modules use those constants for common paths; a small
+number of workflow-owned locations, such as the offline full-study replay root
+and its analysis freeze, are derived from those shared roots in the owning
+module.
 
 ## Core data model
 

@@ -280,27 +280,9 @@ Copy observations reinforce the same split. Full content made FS16 and OC1 decid
 - Zero exposure means no registered exact-match canary appeared in the defined export boundary. It does not prove zero real-world privacy risk.
 - The aggregate does not publish per-fact numerators, a standalone eligible-canary count, or scripted-subset coverage. Those comparisons are unavailable here rather than inferred.
 
-## RSAC article direction
+## Interpretation boundaries
 
-### 1. Proposed article thesis
-
-A single live capture, replayed through four published retention allowlists, shows that forensic reconstructability and registered-canary exposure move independently. Full-content telemetry reconstructed every applicable content fact in this sample and was the only policy that leaked registered canaries; metadata-only, redacted, and security-structured exports had zero registered-canary exposure and recovered different operational, security, and content subsets.
-
-### 2. Three possible titles
-
-- Coverage and Exposure Are Different Questions: Four GenAI Telemetry Policies After One Live Capture
-- What Metadata, Redaction, and Security Enums Each Reconstruct in LLM Incident Telemetry
-- Do Not Pick a Winner: Paired Evidence on GenAI Observability Retention
-
-### 3. Five key practitioner takeaways
-
-1. Score reconstructability and export exposure separately. In this sample P1 had both the highest coverage (0.8065072182719241) and the only non-zero exposure (1.0).
-2. Metadata-only telemetry still answered most operational questions (P0 operational coverage 0.9315068493150684) and answered no security or content questions (both 0.0).
-3. Shared redaction removed registered-canary exposure (P2 = 0.0) while keeping content coverage at 0.8297872340425532, not 0.0 and not 1.0.
-4. Security enums plus detector events raised security coverage to 1.0 on P3 without restoring content facts (content 0.0) and without registered-canary exposure (0.0).
-5. Observable copying is policy-visible only when both locations are retained. FS16 showed no copy observed on every decidable export; OC1 showed copy observed (`yes` = 9) on P1. Neither result is a causal-influence finding.
-
-### 4. Claims that are supported
+### Supported claims
 
 - The live capture completed: 24 realized executions, 96 realized exports, 0 failed runs, 0 unresolved credited evidence pointers.
 - The paid capture was performed once on `gpt-4o-mini-2024-07-18` and replayed from a clean commit; dirty and clean replays were identical on exports, extractions, and results.
@@ -311,7 +293,7 @@ A single live capture, replayed through four published retention allowlists, sho
 - Case/control coverage differed only under P2 for pairs F2C, F2D, F5C, and F5D, each by -0.23529411764705876.
 - Every recorded execution had P3 coverage above P0. P3 was not identical to P0 and was not the highest-coverage policy.
 
-### 5. Claims that must not be made
+### Unsupported claims
 
 - That any policy is universally best, safest, or required.
 - That P3 must differ from P0 in every future suite, or that a P0–P3 tie would have been a failed study.
@@ -322,19 +304,3 @@ A single live capture, replayed through four published retention allowlists, sho
 - That scripted validation, mocked validation, or the earlier feasibility replay is part of this full-study sample.
 - That status codes fully replace security enums for authorization forensics.
 - That exact-match canary results generalize to arbitrary secrets, encodings, or other models.
-
-### 6. Recommended chart list
-
-Use only aggregate fields. Keep coverage and exposure on separate visual encodings; do not plot a combined winner score.
-
-1. Forensic coverage by policy — `aggregates.coverage_by_policy` (P0–P3).
-2. Canary exposure by policy — `aggregates.exposure_by_policy`, with a paired annotation of `aggregates.executions_with_any_exposure`.
-3. Coverage-versus-exposure scatter — one point per policy using those two fields only, with no third composite axis.
-4. Coverage by evidence category — `aggregates.coverage_by_category` grouped by operational, security, and content.
-5. Coverage by scenario family — `aggregates.coverage_by_family` for F1–F6.
-6. P1 exposure by origin location — `aggregates.exposure_by_location` C1 = 2 and C3 = 4; show the empty P0, P2, and P3 location maps as empty rather than inferred counts for other locations.
-7. FS16 yes / no / missing by policy — `fs16_tool_argument_copying.by_policy`.
-8. OC1 yes / no / missing by policy — `oc1_retrieval_to_final_output.by_policy`.
-9. Case minus control by pair and policy — `paired_case_control_differences`, highlighting the non-zero P2 cells.
-
-Do not chart scripted-subset means. That object is empty in this aggregate.

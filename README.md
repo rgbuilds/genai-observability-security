@@ -1,8 +1,8 @@
 # GenAI telemetry privacy and forensic utility
 
-This repository contains an experimental implementation for evaluating how
-GenAI telemetry-retention choices affect forensic utility and plaintext
-exposure.
+This repository contains an experimental implementation, frozen protocol,
+automated tests, and privacy-safe aggregate data for evaluating how GenAI
+telemetry-retention choices affect forensic utility and plaintext exposure.
 
-Additional study documentation and aggregate findings will be shared in a
-later repository update.
+Additional explanatory documentation will be shared in a later repository
+update.
